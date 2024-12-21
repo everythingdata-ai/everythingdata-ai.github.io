@@ -49,7 +49,7 @@ Where do we get all this data ?
 
 A good training dataset seems to be a diverse dataset (webpages, code, conversational, books, scientific articles...) which will perform well in a wide variety of tasks. 
 
-![image](https://github.com/everythingdata-ai/everythingdata-ai.github.io/blob/master/images/posts/dataset-diversity.png)
+![image](/images/posts/dataset-diversity.png)
 
 How to prepare the data ?
 
