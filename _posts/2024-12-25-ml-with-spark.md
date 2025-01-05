@@ -104,28 +104,35 @@ Rather than manually trying to strike the balance between precision and recall, 
 
 ##### MSE : Mean Squared Error
 The average of squared differences between the prediction and the true output. The aim is to minimize the error, in this case MSE. The lower the MSE, the closer the predicted values are to the actual values and the stronger and more confident you can be in your model’s prediction
+
 $$
 MSE=\frac{1}{n} \sum_{i=1}^n​(yi​−\hat{yi}​)^2
 $$
+
 ##### RMSE : Root Mean Square Error
 It is the square root of the MSE and has the same unit as your target variable, making it easier to interpret than the MSE
+
 $$
 RMSE = \sqrt{MSR}
 $$
 
 ##### MAE : Mean Absolute Error
 The average of the absolute values of the errors
+
 $$
 MAE=\frac{1}{n} \sum_{i=1}^n=​∣yi​−\hat{yi}​^​∣
 $$
+
 ##### MAP : Mean absolute percentage error
 Quantifies accuracy as a percentage of the error
+
 $$
 \text{MAPE} = \frac{1}{n} \sum_{i=1}^n \left| \frac{y_i - \hat{y}_i}{y_i} \right| \times 100
 $$
 
 ##### R-squared :
 The amount of variance in the dependent variable that can be explained by the independent variable. It is also called the coefficient of determination and measures the goodness of fit of the model. The values range from zero to one, with zero being a badly fit model and one being a perfect model.
+
 $$
 R^2 = 1 - \frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{\sum_{i=1}^n (y_i - \bar{y})^2}​
 $$
