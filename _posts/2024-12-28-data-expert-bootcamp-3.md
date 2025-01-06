@@ -1,17 +1,13 @@
 ---
 layout: post
-title: Dimensional Data Modeling - Data Expert Bootcamp
+title: Spark Fundamentals - Data Expert Bootcamp
 categories: [Data Engineering, Spark]
 ---
 
 Today I continue with Zach Wilson Data Engineering Bootcamp.
-
 Week 3 is about Apache Spark Fundamentals.
-
 Since I am new to Spark, this week have been quite challenging and the pace was a bit too fast for a beginner.
-
 I decided to take a break from the Bootcamp after today and come back to it in a few days.
-
 Here are my notes from Week 3.
 
 ## 1 - Spark + Iceberg - Memory Tuning, Joins, Partition
