@@ -1,13 +1,11 @@
 ---
 layout: post
-title: Dimensional Data Modeling - Data Expert Bootcamp
+title: Fact Data Modeling - Data Expert Bootcamp
 categories: [Data Engineering, Data Modeling]
 ---
 
 Today I continued the Zach Wilson Data Engineering Bootcamp.
-
 The second week is about Fact Data Modeling.
-
 To continue on my previous post, here are my notes from the second week of the bootcamp.
 
 ## Fact Data Modeling Fundamentals
