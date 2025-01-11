@@ -1,15 +1,17 @@
 ---
 layout: post
-title: AI Engineering book - Chapters 1 & 2
+title: AI Engineering book - Chapter 1
 categories: [AI]
 ---
 
-Today I read the first two chapters of the new O'reilly book AI Engineering : Building applications with foundation models
+Today I read the first chapter of the new O'reilly book AI Engineering : Building applications with foundation models by [Chip Huyen](https://www.linkedin.com/in/chiphuyen/)
 Foundation models have enabled many new AI use cases while lowering the barriers to entry for building AI products. 
 This has transformed AI from an esoteric discipline into a powerful development tool that anyone can use—including those with no prior AI experience.
 This book promises to be a comprehensive, well-structured guide to the essential aspects of building generative AI systems.
 
-Here are my notes from the chapters 1 & 2
+Here are my notes from the first chapter :
+
+![image](/images/posts/ai-engineering-cover.jpeg)
 
 ## 1 - Introduction to Building AI Applications with Foundation Models
 
