@@ -283,6 +283,34 @@ with open("test.txt", "r") as file:
 	print(text)
 ```
 
+## UV package manager 
+
+I also came across this [very informative video](https://www.youtube.com/watch?v=qh98qOND6MI) by ArjacCodes about a new package manager.
+If you're lost with a million venv like me, this might be the tool for you.
+UV, a lightning-fast Python package installer and resolver that could revolutionize the way you manage dependencies. 
+From handling virtual environments and Python versions to simplifying package management, uv does it all with incredible speed and efficiency.
+
+Here is how to set it up :
+
+```bash
+pip install uv
+uv init test_project
+cd test_project
+uv run hello.py
+uv add pandas
+uv tree
+```
+
+You can also use it to manage packages. For example let's add ruff (linter and code formatter) to a project :
+
+```bash
+uv add ruff
+ruff check
+ruff check --fix
+ruff format
+```
+
+
 ## Python Cheat sheet
 
 And to end today's post, I camme across this gem that I had to share.
