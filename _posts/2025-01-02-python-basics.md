@@ -9,7 +9,7 @@ While the best way to learn is by doing, sometimes I just enjoy following along 
 So today I will be doing just that !
 
 
-## 1 - 5 good Python habits to build
+## 5 good Python habits to build
 
 A greta video by that you can watch [here](https://www.youtube.com/watch?v=I72uD8ED73U).
 
@@ -163,7 +163,7 @@ print(long_names)
 
 List comprehensions can very easily become very hard to read, so it's better not to overuse them and keep them simple.
 
-## 2 - 10 Python functions you need to master
+## 10 Python functions you need to master
 
 I really enjoy the way Tech With Tim explains things so simply, you can't watch the video [here](https://www.youtube.com/watch?v=kGcUtckifXc)
 
@@ -283,7 +283,7 @@ with open("test.txt", "r") as file:
 	print(text)
 ```
 
-## 3 - Python Cheat sheet
+## Python Cheat sheet
 
 And to end today's post, I camme across this gem that I had to share.
 Thanks to [The PyCoach](https://thepycoach.com/) for this incredible Python cheat sheet ! 
