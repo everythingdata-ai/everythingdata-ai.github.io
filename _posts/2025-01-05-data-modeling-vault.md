@@ -7,7 +7,7 @@ categories: [Data Engineering]
 Today I'm taking a break from Microsoft Fabric.
 On the menu : revisiting data modeling, and some reading about the modern data vault stack.
 
-## Data Modeling 
+## Data Modeling : Star Schema meets the medallion architecture 
 
 ### Introduction
 Data Modeling transcends more technologies than anything you'll learn.
@@ -115,21 +115,19 @@ Here are some best practices that you can try to follow while implementing both 
 
 ## The modern Data Vault stack
 
-For decades data analytics has been delivered in a standard pattern of zones and layers, each with a special purpose and governed by repeatable patterns and standardisation. Whether the pattern is deployed as a data warehouse, data lake, data lakehouse or a [data fairhouse](https://www.youtube.com/watch?v=YXnoBUQP258) (time will tell if this new term catches on at all). The zones and layers will vary but the purposes remain consistent, we need to deliver reliable data business users need in the form they want for data analytics and artificial intelligence.
+For decades data analytics has been delivered in a standard pattern of zones and layers, each with a special purpose and governed by repeatable patterns and standardisation. 
+Whether the pattern is deployed as a data warehouse, data lake or data lakehouse. 
+The zones and layers will vary but the purposes remain consistent, we need to deliver reliable data business users need in the form they want for data analytics and artificial intelligence.
 
-How does a **modern data vault stack (MDVS)** measure up? It is not that different from the architecture patterns mentioned above that have been proposed only that a data vault is extremely resilient to business architecture evolution at the enterprise and business unit level. To that end, this article will delve into the zones and layers proposed in the diagram below. You should not consider this diagram as a physical implementation but rather a logical one and use this as a guide for your own data vault delivery patterns.
-
-  
-
-![](https://media.licdn.com/dms/image/v2/D5612AQHLDyYAX-fffQ/article-inline_image-shrink_1000_1488/article-inline_image-shrink_1000_1488/0/1732766009790?e=1742428800&v=beta&t=ODaTZfjEHpRN_T_oW1rGt9uBRO-x1_pYSa3Ttp6AILU)
-
-Data Vault stack with a superimposed flowchart
+While the Start Schema is a widely used model, it's not the only one.
+Data Vault is a powerful data modeling methodology widely recognized for its efficiency in managing long-term historical data from multiple operational systems.
+How does a modern data vault stack (MDVS) measure up? It is not that different from the other architecture patterns, only that a data vault is extremely resilient to business architecture evolution at the enterprise and business unit level. 
 
 In brief, data will flow top-down using nomenclature expected of architecture today.
 
-- **Curated zone** (bronze zone) — like deploying crawlers over your operational data products, repeatable patterns of data curation and staging are applied to your data before attempting to integrate that data in the next zone. Two layers are presented in parallel, landing (operational data store- ODS) and inbound shares.
-- **Coherence zone** (silver zone) — data integration into repeatable patterns for the three table types passively integrated by the business key, the unique identifier of business objects your organization’s business capabilities is based on. To adopt and integrate more and more connected data you need a data model that is non-destructive to change and flexible enough to support your evolving corporate memory your analytics is historized on. The primary integration occurs in a source-aligned layer (SAL) and you may also choose to utilise a common access layer (CAL) to promote an easily accessible presentation of that integrated data already enriched with sprinklings of reference data.
-- **Intelligence zone** (gold layer) — Consumer domains each entrusted to consumer domain owners who may extend the existing shared integration model with their own model extensions in a business access layer (BAL).
+- Curated zone (bronze zone) : like deploying crawlers over your operational data products, repeatable patterns of data curation and staging are applied to your data before attempting to integrate that data in the next zone. Two layers are presented in parallel, landing (operational data store- ODS) and inbound shares.
+- Coherence zone (silver zone) : data integration into repeatable patterns for the three table types passively integrated by the business key, the unique identifier of business objects your organization’s business capabilities is based on. To adopt and integrate more and more connected data you need a data model that is non-destructive to change and flexible enough to support your evolving corporate memory your analytics is historized on. The primary integration occurs in a source-aligned layer (SAL) and you may also choose to utilise a common access layer (CAL) to promote an easily accessible presentation of that integrated data already enriched with sprinklings of reference data.
+- Intelligence zone (gold layer) : Consumer domains each entrusted to consumer domain owners who may extend the existing shared integration model with their own model extensions in a business access layer (BAL).
 
 These zones should represent the minimum required layers you should consider as a baseline to your implementation of a modern data vault stack.
 
@@ -450,9 +448,41 @@ Innovation in analytics is driven by reducing ‘steps’ (layers) or executing 
 
 To build a robust data-driven organization, solve as much of your technical debt as far left as possible to ensure data problems are solved as close to the source. This ‘small lever’ (shift-left model) is the most efficient method for designing, building and deploying reliable and safe engagement data products downstream.
 
-## References
+## Some other models worth mentionning
 
-- Rules for an almost unbreakable Data Vault, [bit.ly/4djNchE](http://bit.ly/4djNchE)
-- More Rules for an _(almost)_ unbreakable Data Vault, [bit.ly/3y4jeyD](http://bit.ly/3y4jeyD)
-- The OBT Fallacy & Popcorn Analytics, [bit.ly/3Pfhbgz](http://bit.ly/3Pfhbgz)
-- A Confluence of Metadata, [https://vaultspeed.com/resources/ebooks/a-confluence-of-metadata](https://vaultspeed.com/resources/ebooks/a-confluence-of-metadata)
+- Unified start schema : The USS is an extension of the Kimball star schema that addresses some of its limitations, such as the fan trap and the impossibility to query more than one fact at a time without the risk of a chasm trap.
+
+- Inmon design style : The Inmon design style, created by Bill Inmon, emphasizes building an enterprise-wide, integrated, and interoperable data warehouse as a single source of truth for an organization. Its core idea is to model business concepts (entities and processes) and normalize the data into Third Normal Form (3NF) to minimize redundancy and capture complex relationships.
+
+Advantages
+1) resilience: adaptable to changes in business processes or source systems.
+2) comprehensive: captures rich concepts and relationships for broad reporting capabilities
+
+Drawbacks
+1) complexity: requires highly skilled modelers and significant management commitment
+2) auditability: original data is hard to trace due to heavy transformations
+3) effort-intensive: maintenance and updates for new reporting needs are resource-heavy
+
+- Data Mesh : Data mesh is a modern data architecture approach aimed at solving data ownership issues by decentralizing data management.
+Instead of a centralized data platform, it organizes data into domain-specific platforms, each owned and maintained by business units familiar with the data’s semantics and use cases.
+Inspired by microservice architecture and DevOps practices, data mesh emphasizes ‘data products’ — well-defined interfaces, applications, or data marts enabling seamless interaction across domains.
+
+While it aligns business and IT goals, improves data quality, and empowers teams with end-to-end data ownership, it introduces complexity and requires advanced skills in managing distributed systems and APIs. 
+Adoption is challenging in less tech-savvy industries, but insights like treating data as products and assigning data ownership to business units can still be applied. 
+Tools like dbt facilitate collaboration and documentation in this framework.
+
+- The Pragmatic Data Platform : PDP combines the best aspects of various data modeling styles and architectures to create a modern, efficient data platform while minimizing complexity and expertise requirements.
+PDP adopts key principles from Data Vault (DV) and Inmon, such as:
+1) separating ingestion from business rules
+2) using insert-only ingestion of full history
+3) organizing data around business concepts and clear BK definitions
+
+However, it avoids DV modeling due to its complexity, accepting a trade-off of reduced resilience for simplicity. 
+Data delivery is typically through data marts with star schemas but can also include wide, denormalized tables for specific use cases like ML/AI.
+PDP emphasizes practical solutions, balancing advanced techniques (like using hashes) with accessibility to a broader audience. 
+This pragmatic approach leverages the full capabilities of dbt while simplifying implementation.
+
+
+That's it for today.
+Tomorrow I'll finally finish the DP600 certification course.
+Also I've came across some good news, the DP700 is offered with the discount so I'll be getting into that shortly after.
