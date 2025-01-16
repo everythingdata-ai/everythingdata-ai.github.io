@@ -33,7 +33,7 @@ Now that we’ve seen the advantages of pipelines as code, let’s take a deeper
 ### Architecture
 All of this sounds promosing. Let’s so how it translates in reality, by taking a look at Airflow’s architecture. An Airflow installation generally consists of the following components:
 
-![Airflow architecture](/images/posts/2025/01/airflow-achitecture.png)
+![Airflow architecture](/images/posts/2025/01/airflow-architecture.png)
 
 - A scheduler, which handles both triggering scheduled workflows, and submitting tasks to the executor to run.
 - An executor, which handles running tasks.
