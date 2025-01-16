@@ -108,6 +108,32 @@ Once your Python script created, all you have to do is copy it to your Airflow's
 
 ![Airflow UI](/images/posts/2025/01/airflow-ui.png)
 
+Setting up a first flow is pretty easy and straightforward.
+
+### Use cases :
+Apache Airflow has supported many companies in reaching their goals, for example :
+
+- Sift used Airflow for defining and organizing Machine Learning pipeline dependencies.
+- SeniorLink increased the visibility of their batch processes and decoupled them.
+- Experity deployed Airflow as an enterprise scheduling tool.
+- Onefootball used Airflow to orchestrate SQL transformations in their data warehouses, and to send daily analytics emails.
+
+### The Good and the Bad :
+After this brief overview of Apache Airflow, let’s explore the advantages and disadvantages of incorporating it into your project.
+
+Starting with the Pros :
+
+- Open source : Airflow is supported by a large and active tech community, making it easier to find answers to your issues online.
+- Easy to use : Anyone with Python knowledge, which is the fourth most popular programming language worlwide [1], can deploy a workflow. So Airflow is available for a wide range of developers .
+
+Some of the Cons are :
+
+- Code based : while some may consider Airflow’s code-based approach an advantage, it can also be a disadvantage, since Airflow’s learning curve can be challenging and confusing for novice data engineers, compared to no-code alternatives.
+- Batch-only : unlike Big Data tools such as Kafka or Spark, Airflow exclusively works with batches and is not designed for data streaming.
+
+### Conclusion
+
+With its extensive list of features and functions, I can see why Apache Airflow is rapidly becoming popular among the best workflow management tool. While there is no one-size-fits-all solution, Airflow has proven to meet the data processing needs of numerous use cases.
 
 If you want to learn more about Airflow, [this Git repository](https://github.com/jghoman/awesome-apache-airflow) has everything you need, it's a curated treasure of blogs, videos and code samples !
 
