@@ -44,6 +44,58 @@ All of this sounds promosing. Let’s so how it translates in reality, by taking
 
 ### Hands-on
 Now that we got the theory out of the way, let's get our hands dirty in dig a little bit deeper into Airflow by creating our first flow.
+
+This can be done locally, but in my case I will do it on the cloud (GCP)
+
+First I will create a Compute Engine instance, using a minimum requirement Debian VM (2 vCPU + 1 GB memory)
+On the Network tab, check Allow HTTP and HTTPS and then click Create.
+Once the istance is initiated, let's SSH into it, and install Python and update the catalog: 
+
+```Shell
+sudo apt update
+sudo apt -y upgrade
+sudo apt-get install wget 
+sudo apt install -y python3-pip
+```
+
+Then let's create a virtual environment and activate it :
+
+```Shell
+virtualenv -p python venv
+source venv/bin/activate
+```
+
+We can then install Airflow : 
+
+```Shell
+pip install "apache-airflow[celery]==2.5.3" --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.5.3/constraints-3.7.txt"
+```
+
+Then set-up the project and the Airflow user :
+
+```Shell
+mkdir airflow & cd airflow
+mkdir dags
+
+airflow db init
+
+airflow users create \
+    --username admin\
+    --firstname mourad \
+    --lastname gh\
+    --role Admin \
+    --email mouradelghissassi@gmail.com
+```
+
+And finally start the scheduler and the webserver.
+You might have to whitelist your IP for port 8080 by going to Firewall > Create Firewall Rule
+
+```Shell
+airflow scheduler -D
+airflow webservice -p 8080 -D
+```
+
+Now tha tour Apache Airflow is up and running, let's build our first DAG !
 An Apache Airflow DAG is a Python script which consists of the following logical blocks :
 
 - Python library imports
