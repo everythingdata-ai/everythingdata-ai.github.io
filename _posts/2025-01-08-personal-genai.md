@@ -99,8 +99,11 @@ Here are some tiips for better results :
 ![LORA 6](/images/posts/2025/01/lora-06.png)
 
 Congratulations, you now have a new professional LinkedIn photo for the price of a cup coffee.
-Use your new superpower responsibly and creatively. The possibilities are endless !
 
 ![LORA 7](/images/posts/2025/01/lora-07.png)
 
+Or if you're more into Youtube, then you will have endless new thumbnails, wih exaggerated facial expressions, you know those get the most views ;)
 
+![LORA 8](/images/posts/2025/01/lora-08.png)
+
+Use your new superpower responsibly and creatively. The possibilities are endless !
