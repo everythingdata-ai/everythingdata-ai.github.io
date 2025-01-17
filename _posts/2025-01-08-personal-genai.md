@@ -32,7 +32,7 @@ Include variety of lighting conditions, facial expressions, angles, backgrounds 
 The better your input photos, the better your results will be.
 Put all your photos in a folder a compress it into a ZIP file.
 
-3. The training model :
+2. The training model :
 
 Obviously we need an existing model, I will be using FLUX, an open-source diffusion model made by Black Forest Labs, which is extremely good at making realistic faces.
 The model is available on Replicate, a platform to host and deploy AI models, if you don't have an account already, go [here](https://replicate.com/) to make one.
@@ -81,7 +81,7 @@ The training might take up to an hour.
 
 ![LORA 5](/images/posts/2025/01/lora-05.png)
 
-**Important** Note that this process is not free, training the model costs about 3$ and generating each image costs a couple cents, which to be honest is much cheaper than a professional photo shoot !
+**Important** : Note that this process is not free, training the model costs about 3$ and generating each image costs a couple cents, which to be honest is much cheaper than a professional photo shoot !
 
 ### Using the model
 
