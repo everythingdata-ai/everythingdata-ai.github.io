@@ -143,3 +143,5 @@ reverie - _a state of being pleasantly lost in one's thoughts; a daydream._<br><
 ## License
 
 MIT
+
+[![pages-build-deployment](https://github.com/everythingdata-ai/everythingdata-ai.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/everythingdata-ai/everythingdata-ai.github.io/actions/workflows/pages/pages-build-deployment)
