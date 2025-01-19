@@ -12,6 +12,9 @@ However, I struggled to understand spoken portuguese. And if you've ever had bra
 One day, after listening to the same 2-minute voice message five times and still only catching about half the words, I knew I needed a better solution.
 So to help me understand spoken portuguese better, and as any geek would do, I decided to build a Whatsapp Bot using Python, that incorporates AI to transcribe and translate Whatsapp audio messages !
 
+![Morro de Sao Paulo](/images/posts/2025/01/morro.jpg)
+*Morro de Sao Paulo from above, Bahia, Braziww*
+
 Here is how that went and how you can build your own, with just basic Python and API knowledge :
 
 ## Prequisites 
