@@ -5,11 +5,14 @@ categories: [Python, AI]
 ---
 
 Being a polyglot growing up speaking 3 languages, I have always wanted to learn one or two new languages, so in 2024 I decided to finally go for it.
-After visiting Brazil, I decided I had to learn portuguese. I started my learning journey in march, and 6 months later I could understand written portuguese quite well.
-However, I struggled to understand spoken portuguese. And if you've ever had brazilian friends, you know they love sending audios on Whatsapp !
-So to help me understand spoken portuguese better, and as any geek would do, I decided to build a Whatsapp Bot that transcribes and translates Whatsapp audio messages !
 
-Here is how that went and how you can build your own :
+After visiting Brazil, I decided I had to learn portuguese. I started my learning journey in march, and 6 months later I could understand written portuguese well enough to read news articles and even some literature..
+However, I struggled to understand spoken portuguese. And if you've ever had brazilian friends, you know they love sending audios on Whatsapp !
+
+One day, after listening to the same 2-minute voice message five times and still only catching about half the words, I knew I needed a better solution.
+So to help me understand spoken portuguese better, and as any geek would do, I decided to build a Whatsapp Bot using Python, that incorporates AI to transcribe and translate Whatsapp audio messages !
+
+Here is how that went and how you can build your own, with just basic Python and API knowledge :
 
 ## Prequisites 
 
