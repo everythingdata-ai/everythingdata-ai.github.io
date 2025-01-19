@@ -32,6 +32,6 @@ If you share the same passion, let's connect [here](https://www.linkedin.com/in/
 - [Personalised GenAI image generator](https://everythingdata-ai.github.io/personal-genai/)
 - [End-to-End Earthquake data pipeline using Microsoft Fabric](https://everythingdata-ai.github.io/ms-fabric-earthquake-project/)
 
-![Me](/images/posts/me.png)
+![Me](/images/me.png)
 
 
