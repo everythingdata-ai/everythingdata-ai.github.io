@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Python tips
+title: Python bot to translate Whatsapp audio messages
 categories: [Python, AI]
 ---
 
