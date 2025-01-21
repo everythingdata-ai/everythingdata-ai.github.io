@@ -33,13 +33,10 @@ The better your input photos, the better your results will be.
 Put all your photos in a folder a compress it into a ZIP file.
 
 2. The training model :
-
 Obviously we need an existing model, I will be using FLUX, an open-source diffusion model made by Black Forest Labs, which is extremely good at making realistic faces.
 The model is available on Replicate, a platform to host and deploy AI models, if you don't have an account already, go [here](https://replicate.com/) to make one.
 
-
 3. A host for the model :
-
 HuggingFace is a platform that allows you to host your AI models.
 If you don't have an account already, go [here](https://huggingface.co/) to make one.
 
