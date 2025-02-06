@@ -85,9 +85,13 @@ In this case, file storage is ideal because it has non of these constraints – 
 
 #### BigQuery
 
-
 #### Cloud SQL
 
 #### AlloyDB
 
 #### Cloud Compute
+
+#### When to use each database
+
+![image](https://github.com/user-attachments/assets/11696e65-e1cf-44a8-8b6d-bf5500f33d1c)
+
