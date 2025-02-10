@@ -5,13 +5,28 @@ categories: [Data Engineering, GCP]
 ---
 
 One of the most important advances in the data engineering world in the recent years is the embracing of DevOps practieces in data projects, a.k.a DataOps.
-One of the main aspects of that is defining the infrastructure as code, in contrast to just setting up everything by hand in the Google Cloud Console.
-One of the most common tools to do that is Terraform, which lets you define both cloud and on-prem resources in human-readable configuration files that you can version, reuse, and share. 
-You can then use a consistent workflow to provision and manage all of your infrastructure throughout its lifecycle.
-In this article, you will find the steps to set-up Google Cloud Storage buckets and a Cloud SQL instance using Terraform.
+And one of the main aspects of that is defining the infrastructure as code, in contrast to just setting up everything by hand in the Google Cloud Console for example.
+Terraform is present in almost any data engineering job posting, in this article, you will find the steps to set-up Google Cloud Storage buckets and a Cloud SQL instance using Terraform.
 
 
-### 1 - Create the GCS bucket 
+### 1 - What is Terraform ?
+
+Terraform is an infrastructure as code tool that lets you define both cloud and on-prem resources in human-readable configuration files that you can version, reuse, and share. You can then use a consistent workflow to provision and manage all of your infrastructure throughout its lifecycle. Terraform can manage low-level components like compute, storage, and networking resources, as well as high-level components like DNS entries and SaaS features.
+
+Terraform creates and manages resources on cloud platforms and other services through their application programming interfaces (APIs). Providers enable Terraform to work with virtually any platform or service with an accessible API.
+
+The core Terraform workflow consists of three stages:
+
+- Write: You define resources, which may be across multiple cloud providers and services. For example, you might create a configuration to deploy an application on virtual machines in a Virtual Private Cloud (VPC) network with security groups and a load balancer.
+- Plan: Terraform creates an execution plan describing the infrastructure it will create, update, or destroy based on the existing infrastructure and your configuration.
+- Apply: On approval, Terraform performs the proposed operations in the correct order, respecting any resource dependencies. For example, if you update the properties of a VPC and change the number of virtual machines in that VPC, Terraform will recreate the VPC before scaling the virtual machines.
+
+![image](https://github.com/user-attachments/assets/7416704a-89d8-4969-b998-674d4f54a501)
+
+### 2 - Create a GCS bucket 
+
+First let's see how we can manage a previously created GCS bucket using Terraform.
+
 Go to [GCS](https://console.cloud.google.com/storage/) and click Create :
 Choose a name for your bucket : gigawatt-test
 ![[Pasted image 20250205154026.png]]
@@ -20,27 +35,22 @@ Choose a region for your bucket : europe-west9
 ![[Pasted image 20250205154005.png]]
 
 Choose a storage class for your data : Standard
-
 ![[Pasted image 20250205154108.png]]
 
 Choose the control access to the bucket 
-
 ![[Pasted image 20250205154147.png]]
 
 Choose how to protect the data and click Create
-
 ![[Pasted image 20250205154244.png]]
 
 Prevent public access to the bucket
-
 ![[Pasted image 20250205154325.png]]
 
 
-### 2 - Create a Service Account for Terraform
+### 3 - Create a Service Account for Terraform
 
 Go to [IAM > Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts)
 Click on Create Service Account and define the name
-
 ![[Pasted image 20250205154607.png]]
 
 Then click on Continue and Done, we will define the roles through the console.
@@ -69,7 +79,7 @@ Create an access key for your account  and save it to a JSON file :
 gcloud iam service-accounts keys create terraform-key.json --iam-account=terraform-test@fourth-walker-449914-t1.iam.gserviceaccount.com
 ```
 
-### 3 - Set up the project
+### 4 - Set up the project
 
 Start a new project in VSCode, and create a folder called Terraform and switch to it :
 
@@ -83,9 +93,6 @@ Copy the previously created key json file into this folder.
 Terraform only reads those files that have .tf or .tfvars extensions. 
 There are some files that need to be named in a specific way, whereas others are just resource abstraction and will be executed in the no order unless you mention the dependencies using depends_on. 
 Main.tf, variables.tf and terraform.tfvars are the files that need to be created with the exact names.
-
-
-
 
 
 Create a new file called main.tf containing the following code :
@@ -200,7 +207,7 @@ Do not confuse _terraform.tfvars_ files with _variable.tf_ files. Both are c
 
 variable.tf are files where all variables are declared; these might or might not have a default value, while variable.tfvars are files where the variables are provided/assigned a value.
 
-### 4 - Create a Cloud SQL instance and connect it to Terraform
+### 5 - Create a Cloud SQL instance and connect it to Terraform
 
 Go to [Cloud SQL](https://console.cloud.google.com/sql/instances) and create a new Postgres Sandbox instance :
 
@@ -251,7 +258,7 @@ resource "google_sql_database_instance" "postgres_gigawatt_test" {
 
 You can find all the attributes [here](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance)
 
-#### Cloud SQL Password policies
+#### 6 - Cloud SQL Password policies
 
 Password policies set define governance in terms of complexity, expiry and reusability. It enforces users to follow a set of standards for password as minimum requirement or rules.Well defined password policies about minimum length, complexity and expiration enforce an additional layer of security for database users using built-in authentication.
 
