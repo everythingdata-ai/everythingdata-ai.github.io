@@ -29,29 +29,34 @@ First let's see how we can manage a previously created GCS bucket using Terrafor
 
 Go to [GCS](https://console.cloud.google.com/storage/) and click Create :
 Choose a name for your bucket : gigawatt-test
-![[Pasted image 20250205154026.png]]
+![image](https://github.com/user-attachments/assets/4ba1198d-1e3c-47e1-85d3-9d1e7ab041f1)
 
 Choose a region for your bucket : europe-west9
-![[Pasted image 20250205154005.png]]
+![image](https://github.com/user-attachments/assets/ac816f02-b201-4da7-a701-4ed3c15b7066)
+
 
 Choose a storage class for your data : Standard
-![[Pasted image 20250205154108.png]]
+![image](https://github.com/user-attachments/assets/5724abfe-060f-458d-96e0-a2da71d41159)
+
 
 Choose the control access to the bucket 
-![[Pasted image 20250205154147.png]]
+![image](https://github.com/user-attachments/assets/cb2f0f92-039f-49ff-9740-09c56bbe541d)
+
 
 Choose how to protect the data and click Create
-![[Pasted image 20250205154244.png]]
+![image](https://github.com/user-attachments/assets/40b0d1dc-9671-4a5c-bfa0-9e4c5266fecd)
+
 
 Prevent public access to the bucket
-![[Pasted image 20250205154325.png]]
+![image](https://github.com/user-attachments/assets/ccafbe42-a217-455d-9044-76d9b91de877)
 
 
 ### 3 - Create a Service Account for Terraform
 
 Go to [IAM > Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts)
 Click on Create Service Account and define the name
-![[Pasted image 20250205154607.png]]
+![image](https://github.com/user-attachments/assets/23e460ea-b42b-4aef-a66f-9cda3ddd322e)
+
 
 Then click on Continue and Done, we will define the roles through the console.
 
@@ -119,7 +124,8 @@ Initialize the terraform project :
 terraform init
 ```
 
-![[Pasted image 20250205160235.png]]
+![image](https://github.com/user-attachments/assets/fe04f956-7be9-4deb-a98c-9e785af4448a)
+
 
 To test that everything is working correctly, let's push a test file to the GCS bucket.
 
@@ -145,11 +151,19 @@ Execute the plan, when prompted, type yes :
 terraform apply
 ```
 
-![[Pasted image 20250205160603.png]]
+To avoid typing Yes each time you apply, you can use :
+
+```
+terraform apply -auto-approve
+```
+
+![image](https://github.com/user-attachments/assets/d36e6645-e27a-43ff-bfa8-d6c2da3ecbe1)
+
 
 A test file should be created in your bucket :
 
-![[Pasted image 20250205161242.png]]
+![image](https://github.com/user-attachments/assets/d0a8bc3b-c5ad-4d44-854c-71eabf386c32)
+
 You can also create Bucket directly thourgh Terraform, instead of the GCP console, by using google_storage_bucket in the main.tf file :
 
 ```yaml
@@ -211,7 +225,8 @@ variable.tf are files where all variables are declared; these might or might not
 
 Go to [Cloud SQL](https://console.cloud.google.com/sql/instances) and create a new Postgres Sandbox instance :
 
-![[Pasted image 20250205164526.png]]
+![image](https://github.com/user-attachments/assets/3c2e0d1d-3651-40bb-8de0-d1f7e84878c5)
+
 
 You can see the available tiers list using the gCloud CLI command :
 
@@ -264,4 +279,5 @@ Password policies set define governance in terms of complexity, expiry and reusa
 
 Recently CloudSQL for PostgreSQL [launched](https://cloud.google.com/sql/docs/postgres/built-in-authentication#built-in_authentication_for) enforcement of password policy at the instance level as an additional security measure. It is primarily enforce for built-in authentication i.e. authenticate with passwords for database logins.
 
-![[Pasted image 20250205173235.png]]
+![image](https://github.com/user-attachments/assets/34bf8096-bc77-4448-8453-aedf374879e8)
+
