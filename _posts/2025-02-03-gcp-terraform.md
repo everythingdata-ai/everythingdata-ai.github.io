@@ -28,26 +28,33 @@ The core Terraform workflow consists of three stages:
 First let's see how we can manage a previously created GCS bucket using Terraform.
 
 Go to [GCS](https://console.cloud.google.com/storage/) and click Create :
+
 Choose a name for your bucket : gigawatt-test
+
 ![image](https://github.com/user-attachments/assets/4ba1198d-1e3c-47e1-85d3-9d1e7ab041f1)
 
 Choose a region for your bucket : europe-west9
+
 ![image](https://github.com/user-attachments/assets/ac816f02-b201-4da7-a701-4ed3c15b7066)
 
 
 Choose a storage class for your data : Standard
+
 ![image](https://github.com/user-attachments/assets/5724abfe-060f-458d-96e0-a2da71d41159)
 
 
 Choose the control access to the bucket 
+
 ![image](https://github.com/user-attachments/assets/cb2f0f92-039f-49ff-9740-09c56bbe541d)
 
 
 Choose how to protect the data and click Create
+
 ![image](https://github.com/user-attachments/assets/40b0d1dc-9671-4a5c-bfa0-9e4c5266fecd)
 
 
 Prevent public access to the bucket
+
 ![image](https://github.com/user-attachments/assets/ccafbe42-a217-455d-9044-76d9b91de877)
 
 
