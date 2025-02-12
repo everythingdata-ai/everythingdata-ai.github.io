@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Manage GCP architecutre with Terraform - Part 2
+title: Manage GCP architecutre with Terraform - Part 2 - Cloud Run Functions and AlloyDB
 categories: [Data Engineering, GCP]
 ---
 
 After the first part of the series about managing GCP infrastructure with Terraform, today I will continue with more use cases.
-In this article, we can see how to setp up a Cloud Run Function, and AlloyDB instance and a Data Fusion Instance using Terraform.
+In this article, we can see how to setp up a Cloud Run Function, and AlloyDB instance.
 
 ### Cloud Run Function through the UI
 First let's create a Cloud Run Function through the GCP user interface to understand how it works.
@@ -212,5 +212,142 @@ resource "google_cloudfunctions2_function" "xml_to_json_function" {
   }
 } 
 ```
+
 Now all you have left to do is run `terraform apply` and your function will be deployed to GCP in no time.
+
+### Deploy an AlloyDB instance
+If you haven't heard of AlloyDB, I recommend you take a look at the [GCP storage options.](https://everythingdata-ai.github.io/gcp-storage/)
+But basically it's a Postgres database on steroids, offered by GCP.
+
+#### Setting up
+First go to [AlloyDB](https://console.cloud.google.com/alloydb) and [Enable the necessary APIs](https://console.cloud.google.com/flows/enableapi?apiid=alloydb.googleapis.com,compute.googleapis.com,cloudresourcemanager.googleapis.com,servicenetworking.googleapis.com) :
+- AlloyDB API, 
+- Compute Enginer API, 
+- Cloud Resource Manager API  
+- Service Networking API.
+
+To be able to create an instance using Terraform, you also need to enable the Service Usage API [here](https://console.cloud.google.com/apis/library/serviceusage.googleapis.com?project=fourth-walker-449914-t1&inv=1&invt=AbpSqw)
+
+If you get this error "service networking config validation failed NETWORK_PEERING_DELETED - no peering found on network" follow these steps : 
+https://cloud.google.com/alloydb/docs/configure-connectivity
+
+Add the necessary roles for the service account using the gCLI :
+
+```bash
+gcloud projects add-iam-policy-binding fourth-walker-449914-t1 --member="serviceAccount:terraform-test@fourth-walker-449914-t1.iam.gserviceaccount.com" --role="roles/compute.networkAdmin"
+
+
+gcloud projects add-iam-policy-binding fourth-walker-449914-t1 --member="serviceAccount:terraform-test@fourth-walker-449914-t1.iam.gserviceaccount.com" --role="roles/compute.securityAdmin"
+
+gcloud projects add-iam-policy-binding fourth-walker-449914-t1 --member="serviceAccount:terraform-test@fourth-walker-449914-t1.iam.gserviceaccount.com" --role="roles/alloydb.admin"
+```
+
+#### Creating the Terraform file
+
+Create a new alloydb.tf file that will contain your AlloyDB instance code.
+You can use the code below :
+
+- Enable the required APIs, I already did this in the GCP UI but know it can be done using Terraform as well :
+  
+```yaml
+# Enable required APIs
+resource "google_project_service" "alloydb" {
+
+  for_each = toset([
+    "alloydb.googleapis.com",
+    "compute.googleapis.com",
+    "servicenetworking.googleapis.com"
+  ])
+  service = each.key
+  disable_on_destroy = false
+}
+```
+
+- Set up a network :
+ 
+```yaml
+# VPC Network
+resource "google_compute_network" "alloydb_network" {
+  name                    = "alloydb-network"
+  auto_create_subnetworks = false
+  depends_on = [google_project_service.alloydb]
+}
+
+# Subnet
+resource "google_compute_subnetwork" "alloydb_subnet" {
+  name          = "alloydb-subnet"
+  ip_cidr_range = "10.0.0.0/24"
+  region        = var.region
+  network       = google_compute_network.alloydb_network.id
+}
+
+# Private IP range
+resource "google_compute_global_address" "private_ip_alloydb" {
+  name          = "alloydb-private-ip"
+  purpose       = "VPC_PEERING"
+  address_type  = "INTERNAL"
+  prefix_length = 16
+  network       = google_compute_network.alloydb_network.id
+}
+
+# VPC Peering
+resource "google_service_networking_connection" "alloydb_vpc_connection" {
+  network                 = google_compute_network.alloydb_network.id
+  service                 = "servicenetworking.googleapis.com"
+  reserved_peering_ranges = [google_compute_global_address.private_ip_alloydb.name]
+}
+```
+
+- Declare you AlloyDB cluster :
+
+```yaml
+# AlloyDB Cluster
+resource "google_alloydb_cluster" "default" {
+  cluster_id = "alloydb-cluster"
+  location   = var.region
+  network_config {
+    network = google_compute_network.alloydb_network.id
+  }
+  initial_user {
+    user     = var.database_user
+    password = var.database_password
+  }
+  depends_on = [google_service_networking_connection.alloydb_vpc_connection]
+}
+```
+
+- Declare your AlloyDB primary instance :
+
+```yaml
+# Primary Instance
+resource "google_alloydb_instance" "primary" {
+  cluster       = google_alloydb_cluster.default.name
+  instance_id   = "alloydb-instance"
+  instance_type = "PRIMARY"
+  machine_config {
+    cpu_count = 2
+  }
+  depends_on = [google_alloydb_cluster.default]
+}
+```
+
+- You can also optionally add a read pool :
+
+```yaml
+# Create read pool (optional) 
+resource "google_alloydb_instance" "read_pool" { 
+	cluster = google_alloydb_cluster.primary.name 
+	instance_id = "alloydb-read-pool" 
+	instance_type = "READ_POOL" 
+	read_pool_config { 
+	node_count = 2 
+} 
+	machine_config { 
+		cpu_count = 2 
+	} 
+	depends_on = [google_alloydb_instance.primary] 
+}
+```
+
+Once you're file is ready and saved, run `terraform apply` and after a few minutes your AlloyDB instance will be ready to use.
 
