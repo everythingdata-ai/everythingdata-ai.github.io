@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Manage GCP architecutre with Terraform - Part 2 - Cloud Run Functions and AlloyDB
-categories: [Data Engineering, GCP]
+categories: [Data Engineering, GCP, Terraform]
 ---
 
 After the first part of the series about managing GCP infrastructure with Terraform, today I will continue with more use cases.
