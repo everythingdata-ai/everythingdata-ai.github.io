@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Manage GCP architecutre with Terraform
+title: Manage GCP architecutre with Terraform - Part 1 - GCS and Cloud SQL
 categories: [Data Engineering, GCP]
 ---
 
