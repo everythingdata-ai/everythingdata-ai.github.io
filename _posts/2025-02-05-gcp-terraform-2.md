@@ -124,8 +124,8 @@ google-cloud-storage==2.*
 cloudevents==1.*
 cloud-sql-python-connector==1.*
 psycopg2-binary==2.*
-Use this trigger event to test the function :
 ```
+Use this trigger event to test the function :
 
 ```json
 {
