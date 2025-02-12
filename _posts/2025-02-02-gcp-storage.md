@@ -95,3 +95,40 @@ In this case, file storage is ideal because it has non of these constraints – 
 
 ![image](https://github.com/user-attachments/assets/11696e65-e1cf-44a8-8b6d-bf5500f33d1c)
 
+#### Cloud SQL vs AlloyDB
+
+In the current project I'm working on, the data is mainly transactional, so I was planning to choose Cloud SQL for it, but then AlloyDB cought my attention.
+This can be a tough decision. Both are powerful PostgreSQL-based database services on Google Cloud Platform (GCP), but they cater to different use cases and have their own strengths and weaknesses. Here’s a detailed comparison to help you decide:
+
+- Use Cases:
+
+Cloud SQL for PostgreSQL: Ideal for smaller to medium-sized workloads, web applications, content management systems (CMS), and general-purpose database needs.
+AlloyDB: Designed for demanding workloads, large datasets, hybrid transactional and analytical processing (HTAP), and data warehousing.
+
+- Performance and Scalability:
+
+Cloud SQL for PostgreSQL: Offers good performance for common workloads but can struggle with large datasets and complex queries. Scalability is limited to horizontal scaling.
+AlloyDB: Delivers significantly higher performance and scales up and down seamlessly to handle varying workloads. Offers both horizontal and vertical scaling options.
+
+- Features:
+ 
+Cloud SQL for PostgreSQL: Provides basic database features with built-in high availability and disaster recovery (HA/DR) functionalities.
+AlloyDB: Offers advanced features like automatic data tiering, analytics acceleration, and built-in machine learning for optimizing performance and managing complex workloads.
+
+- Cost:
+
+Cloud SQL for PostgreSQL: Generally less expensive than AlloyDB, especially for smaller deployments.
+AlloyDB: Can be significantly more expensive due to its advanced features and high performance capabilities.
+
+- Ease of Use:
+ 
+Cloud SQL for PostgreSQL: Simpler to manage with Google handling the underlying infrastructure. Familiar interface for PostgreSQL users.
+AlloyDB: Requires more hands-on configuration and management due to its advanced features. Steeper learning curve for those new to PostgreSQL or AlloyDB.
+
+- Overall:
+  
+Cloud SQL for PostgreSQL: Best for cost-effective, simple, and familiar PostgreSQL experience for smaller to medium-sized workloads.
+AlloyDB: Best for demanding workloads, large datasets, high performance, advanced analytics, and tight integration with other GCP services.
+
+I recommend exploring both options further and comparing their features and pricing to find the best fit for your specific requirements. 
+As for me, I think I will be choosing AlloyDB to have the best of both worlds : a transactional database with the possibility of having analytics tables.
