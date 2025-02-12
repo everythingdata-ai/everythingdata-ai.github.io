@@ -83,15 +83,74 @@ In this case, file storage is ideal because it has non of these constraints – 
 
 ### Database storage
 
-#### BigQuery
+After processing raw files into relational data, they need to be stored in a database.
+Here are the available relational data storage services on GCP:
+
+#### Oracle Database
+The project I'm working on is the migration of an existing Oracle Database.
+For simplicity purposes, it is possible to build on top of the existing project by keeping an Oracle database but moving it to the cloud.
+
+Since September 2024, GCP offers the option to run an Oracle database on GCP through Oracle Database@Google Cloud.
+Another option is to create an Oracle database on a virtual machine using Compute Engine.
+
+Here’s a quick comparison of the two options:
+
+
+| Oracle Database@Google       | Compute Engine                                |
+| ---------------------------- | --------------------------------------------- |
+| Pre-configured and optimized | Full control over configuration               |
+| More expensive               | Better benefit-cost ratio                     |
+| Automated backups            | Use of existing Oracle licenses               |
+| Direct Oracle support        | Requires expertise in database administration |
+
+Given the size of the data of this project which is rather small (500 Gb), using Compute Engine is recommended. However, it requires a dedicated database administrator.  
+
+Using an Oracle database is one of the most expensive options, mainly due to the license. Here's an estimate of the costs for 500GB of data:
+- Compute Engine VM (e2-standard-4): ~97€/month
+- 1TB Persistent SSD: ~170€/month
+- Oracle License - Bring Your Own License: 0€ or Pay-as-you-go: ~380€/month for the Standard Edition  
+    Total cost: 267-647€/month depending on the license.  
+    For the Database@Google option, it will cost a few thousand euros per month.
 
 #### Cloud SQL
 
+This service allows you to have a classic relational database, fully managed by GCP, on the cloud. You can choose between three database management systems: MySQL, PostgreSQL, and SQL Server.  
+Cloud SQL allows automatic data backup and offers the ability to replicate the database across two different zones (within the same region), as well as a Read-Only version in a different zone.  
+It is one of the least expensive options for hosting data. Here's an estimate of the costs for 500GB of data:
+
+- Cloud SQL Instance (db-standard-2) with 2 vCPUs / 7.5GB RAM: ~130€/month
+- 500GB of storage: ~100€/month
+- High availability: 130€/month
+- Automated backups: included  
+    Total cost: ~230€/month for a single instance or ~360€/month in HA.
+
 #### AlloyDB
 
-#### Cloud Compute
+Similar to Cloud SQL, AlloyDB is a fully managed database service providing access to an enhanced and more powerful version of PostgreSQL.  
+Applications can connect to AlloyDB through standard PostgreSQL connectors, and queries are made using PostgreSQL syntax.  
+This service can handle larger workloads than Cloud SQL, including hybrid transactional and analytical processing, with response times up to 4 times faster.  
+What differentiates AlloyDB from Cloud SQL is mainly continuous automatic analysis of query structure and frequency, which allows it to suggest schema improvements or apply optimizations automatically. AlloyDB also offers a columnar data engine, boosting performance for analytical queries.  
+The cost of AlloyDB is a bit higher than Cloud SQL, but with the additional features, it remains a good cost/benefit ratio. Here's an estimate of the costs for 500GB of data:
+
+- AlloyDB instance with vCPU (4 cores): 134€/month
+- Memory (16GB): 66€/month
+- 500GB storage: 120€/month  
+    Total cost: 320€/month
+
+#### Cloud Spanner
+
+Cloud Spanner is the most advanced database on GCP, combining relational, graph, key-value, and search workloads. It easily integrates with AI functionalities (LangChain, Vertex AI).  
+It is suitable for large amounts of data (+100,000 reads/writes per second).  
+Cloud Spanner is also the most expensive option, with a cost of ~2000€ per month for 500GB of storage and 3 compute nodes.
+
+#### BigQuery
+
+Arguably the most used option, BigQuery is GCP's data warehouse service for analytics, allowing real-time analysis on large amounts of data.  
+Since BigQuery is serverless, no infrastructure needs to be configured or managed, unlike AlloyDB for example. With the web console, it is one of the easiest services to use on GCP. Another advantage of BigQuery is the tools it offers, such as Dataflow (the equivalent of dbt) and Data Studio.  
+BigQuery has a low cost, with 10GB of storage and 1TB of queries available per month for free.
 
 #### When to use each database
+Since a picture is worth a thousand words, here is a graphic that will help you decide which database to use :
 
 ![image](https://github.com/user-attachments/assets/11696e65-e1cf-44a8-8b6d-bf5500f33d1c)
 
@@ -132,3 +191,6 @@ AlloyDB: Best for demanding workloads, large datasets, high performance, advance
 
 I recommend exploring both options further and comparing their features and pricing to find the best fit for your specific requirements. 
 As for me, I think I will be choosing AlloyDB to have the best of both worlds : a transactional database with the possibility of having analytics tables.
+
+That was a quick overview of most of the storage options available on Google Cloud Platfom.
+In the next post I will give you an overview of the tools to process data in GCP.
