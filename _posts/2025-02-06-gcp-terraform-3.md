@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Manage GCP architecutre with Terraform - Part 3 - Cloud Composer
-categories: [Data Engineering, GCP]
+categories: [Data Engineering, GCP, Terraform]
 ---
 
 One of the most used services in GCP is Cloud Composer, which is Google Cloud Composer is a fully managed Apache Airflow service that helps you create, schedule, monitor and manage data pipelines/workflows.
