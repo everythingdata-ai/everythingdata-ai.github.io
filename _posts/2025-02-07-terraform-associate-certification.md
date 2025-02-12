@@ -10,7 +10,9 @@ In the upcoming days I will be checking various Terraform courses to deepen my k
 
 These are my notes from the [HashiCorp Terraform Associate Certification Course](https://www.youtube.com/watch?v=SPcwo0Gq9T8)
 
-### 1 - Understand infrastructure as code (IaC)
+### 1 - Infrastructure as Code (IaC) concepts
+
+#### What is Iac ?
 
 Manually configuring your cloud infrastructure is a quick and easy way to start using new services but it comes with downsides : 
 - mis-configure a service through human error
