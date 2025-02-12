@@ -81,6 +81,8 @@ The up-to-date processed files must be available for further processing or for d
 Object storage is also not ideal because its not mountable (can’t be attached to a compute instance).
 In this case, file storage is ideal because it has non of these constraints – it can be shared across multiple instances and it is mountable.
 
+![image](https://github.com/user-attachments/assets/2476e50e-ad14-45a9-a21b-f48c034154b2)
+
 ### Database storage
 
 After processing raw files into relational data, they need to be stored in a database.
