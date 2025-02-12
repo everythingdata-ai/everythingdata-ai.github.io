@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Manage GCP architecutre with Terraform - Part 1 - GCS and Cloud SQL
-categories: [Data Engineering, GCP]
+categories: [Data Engineering, GCP, Terraform]
 ---
 
 One of the most important advances in the data engineering world in the recent years is the embracing of DevOps practieces in data projects, a.k.a DataOps.
