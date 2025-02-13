@@ -211,12 +211,14 @@ airflow users create \
     --email mouradelghissassi@gmail.com
 ```
 
-Last but not least, Airflow runs only on port 8080. So, In the GCP console, Navigate to the VPC Network -> Click on Firewall and create a port rule. Add port 8080 under TCP and click Create Rule in the Port rule.
+Last but not least, Airflow runs only on port 8080. So, In the GCP console, Navigate to the VPC Network -> Click on Firewall and Create a firewall rule. 
+Add port 8080 under TCP and click Create Rule in the Port rule.
 
-On the Compute Instance, add the Firewall rule to access port 8080.
+<img width="285" alt="image" src="https://github.com/user-attachments/assets/3c868e30-0804-4619-9e21-c903a544eb3e" />
 
-And finally start the scheduler and the webserver.
-You might have to whitelist your IP for port 8080 by going to Firewall > Create Firewall Rule
+Go back to your Compute Engine VM and Edit the setting to allow HTTP/HTPPS requests in the Firewalls section :
+
+<img width="278" alt="image" src="https://github.com/user-attachments/assets/75c75bb3-c5b9-4d13-bcb5-ca5b6a68c694" />
 
 Your Airflow is now ready to use, you can start your scheduler and webserver using these commands :
 
@@ -224,6 +226,9 @@ Your Airflow is now ready to use, you can start your scheduler and webserver usi
 airflow scheduler -D
 airflow webserver -p 8080 -D
 ```
+And access the Airflow UI through ```http://<VM_EXTERNAL_IP>:8080```
+
+<img width="464" alt="image" src="https://github.com/user-attachments/assets/cc4d8506-2580-460a-b6c4-27c063098f4a" />
 
 And just with these few extra steps, you now have a "Cloud Composer" for the fraction of the price.
 
