@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Discovering Apache Airflow
-categories: [Data Engineering]
+categories: [Data Engineering, Airflow]
 ---
 
 If you’ve been keeping an eye on the data engineering market, you might have noticed that Apache Airflow is becoming more and more common in job postings.
