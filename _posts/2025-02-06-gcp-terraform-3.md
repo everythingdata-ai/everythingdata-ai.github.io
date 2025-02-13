@@ -25,6 +25,8 @@ gcloud projects add-iam-policy-binding fourth-walker-449914-t1 --member="service
 gcloud projects add-iam-policy-binding fourth-walker-449914-t1 --member="serviceAccount:terraform-test@fourth-walker-449914-t1.iam.gserviceaccount.com" --role="roles/resourcemanager.projectIamAdmin"
 ```
 
+### Creating a Cloud Composer environment
+
 Now let's create a new Terraform file, that I called gcc.tf (for Google Cloud Composer).
 In this file, you should :
 
@@ -158,3 +160,74 @@ Although not very practical, you can set-up a pipeline that destroys the Compose
 - Delete the Environment and its bucket
 
 The environment snapshot can then be loaded to restore the Environment to the state when the snapshots were created.
+
+### Setting up Airflow using Comput Engine
+
+If Cloud Composer is out of your budget, you can still use Airflow by creating your own environment in a Cloud Compute Virtual Machine.
+Here is how you can do that :
+
+Go to [Cloud Compute](https://console.cloud.google.com/compute) and click on Create an Instance.
+Choose your machine configuration based on your needs. For testing purposes, an E2 instance is enough.
+
+<img width="377" alt="image" src="https://github.com/user-attachments/assets/de634da7-f9a7-4aec-8a0d-ba8a7c17424c" />
+
+Once created, connect to your machine through SSH.
+First thing we need to run Airflow is to install Python, you can do so by running these commands in your SSH Shell :
+
+```Shell
+sudo apt update
+sudo apt -y upgrade
+sudo apt-get install wget 
+sudo apt install -y python3-pip
+```
+
+With our Python ready, let's create a new Virtual Environment :
+
+```Shell
+mkdir Airflow && cd Airflow
+sudo apt-get install virtualenv
+virtualenv -p python venv
+source venv/bin/activate
+```
+
+Next let's install Airflow through pip :
+
+```Shell
+pip install "apache-airflow[celery]==2.10.5" --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.10.5/constraints-3.8.txt"
+```
+
+Then set-up the project and the Airflow user :
+
+```Shell
+mkdir dags && cd dags
+
+airflow db init
+
+airflow users create \
+    --username admin\
+    --firstname mourad \
+    --lastname gh\
+    --role Admin \
+    --email mouradelghissassi@gmail.com
+```
+
+Last but not least, Airflow runs only on port 8080. So, In the GCP console, Navigate to the VPC Network -> Click on Firewall and create a port rule. Add port 8080 under TCP and click Create Rule in the Port rule.
+
+On the Compute Instance, add the Firewall rule to access port 8080.
+
+And finally start the scheduler and the webserver.
+You might have to whitelist your IP for port 8080 by going to Firewall > Create Firewall Rule
+
+Your Airflow is now ready to use, you can start your scheduler and webserver using these commands :
+
+```Shell
+airflow scheduler -D
+airflow webserver -p 8080 -D
+```
+
+And just with these few extra steps, you now have a "Cloud Composer" for the fraction of the price.
+
+
+
+
+
