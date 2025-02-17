@@ -158,7 +158,7 @@ On the right, you have the actions buttons as well as the Links to see other vie
 
 <img width="53" alt="image" src="https://github.com/user-attachments/assets/9f2f8c42-3bf6-4382-bb40-cde53289ea25" />
 
-#### Grid View and Graph view
+#### Grid view and Graph view
 If you click on a DAG, you land in the Grid view that gives insights of the DAG : 
 
 ![image](https://github.com/user-attachments/assets/e74f9a2e-264d-4cbf-90a3-1605da91dbeb)
@@ -167,12 +167,89 @@ And from there you can go to the Graph view, which is perfect for checking depen
 
 ![image](https://github.com/user-attachments/assets/2bad36e5-90d3-4170-9488-dc6d0eca2067)
 
-
 Tip : The mean run duration + buffer is the correct value for defining a timeout for your DAG.
 
-#### 
+#### Calendar view and Landing times
+
+Another useful view is the Calendar view, it overviews your entire DAG's history over months or even years, making it easy to spot breaking patterns or trends.
+A square is a day, and the color of that square depends on the ratio between successful and failed DAG runs.
+Squares with dots indicate that DAG runs are planned for these days.
+
+Landing times are calculated from the task scheduled time to the time the task finishes (end_time - scheduled_time)
+This view is perfect for evaluating the effectiveness of your changes.
+
+#### Gantt view
+
+This view helps you find bottlenecks in your DAG runs.
+A rectangle is a task. The longer the rectangle, the longer it took to complete the task.
+A rectangle is divided into two parts. The first part (grey) is the queued time. The second is the execution time.
+The queued time corresponds to the time spent waiting for a worker to pick your task. A worker executes tasks.
+Two rectangles side by side mean tasks have been executed in parallel and this is an overlap.
+
+#### Code view 
+
+The Code view shows the DAG code parsed by the Scheduler.
+The Code view is perfect for checking whether or not DAG updates have been picked up.
+Look at the Parsed at date instead of searching for your modification in the code.
+You can't edit DAG code in the Code view.
 
 ### DAGs 101
+
+In this module we will learn the basics of how to create a data pipeline in Airflow.
+
+#### What's a DAG?
+
+In Airflow, a directed acyclic graph (DAG) is a data pipeline defined in Python code. Each DAG represents a collection of tasks you want to run and is organized to show relationships between tasks in the Airflow UI. The mathematical properties of DAGs make them useful for building data pipelines:
+
+Directed: If multiple tasks exist, each must have at least one defined upstream or downstream task.
+Acyclic: Tasks cannot have a dependency on themselves. This avoids infinite loops.
+Graph: All tasks can be visualized in a graph structure, with relationships between tasks defined by nodes and vertices.
+Aside from these requirements, DAGs in Airflow can be defined however you need! They can have a single task or thousands of tasks arranged in any number of ways.
+
+For example, the image below represents a DAG with three tasks.
+
+![image](https://github.com/user-attachments/assets/8ae9bd88-a972-4acb-8b3f-1c18b8e0d957)
+
+#### Your first data pipeline
+
+Let's create a new file in the dag folder called my_dag.py.
+
+Airflow offers two ways of defining your DAGs and Tasks:
+
+- The traditional paradigm :
+
+
+```python
+from airflow import DAG
+from datetime import datetime
+
+with DAG('my_dag',
+  description='A simple description',
+  tags=[data_science],
+  start_date=datetime(2025, 1, 1),
+  schedule='@daily',
+  catchup=False):
+None
+```
+- The TaskFlow API :
+
+```python
+from airflow.decorators import dag
+from datetime import datetime
+
+@dag(start_date=datetime(2023, 1, 1), description='A simple tutorial DAG', 
+     tags=['data_science'], schedule='@daily', catchup=False)
+def my_dag():
+    None
+
+my_dag()
+```
+
+With the Taskflow API, instead of using the context manager with, you use the dag decorator.
+The dag decorator expects a python function (here my_dag) where the name corresponds to your DAG id.
+You will define/call tasks within this function.
+Last but not least, do not forget to call your dag function ( here my_dag()) otherwise your DAG won't show up on the Airflow UI.
+
 
 ### DAG scheduling
 
