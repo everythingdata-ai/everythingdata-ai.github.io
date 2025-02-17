@@ -218,7 +218,6 @@ Airflow offers two ways of defining your DAGs and Tasks:
 
 - The traditional paradigm :
 
-
 ```python
 from airflow import DAG
 from datetime import datetime
@@ -231,6 +230,9 @@ with DAG('my_dag',
   catchup=False):
 None
 ```
+
+Note : We can also define a DAG using 'dag = DAG('my_dag'...' but we use the context manager 'with' to avoid having to assign the DAG object to every task.
+
 - The TaskFlow API :
 
 ```python
@@ -250,8 +252,150 @@ The dag decorator expects a python function (here my_dag) where the name corresp
 You will define/call tasks within this function.
 Last but not least, do not forget to call your dag function ( here my_dag()) otherwise your DAG won't show up on the Airflow UI.
 
+Now let's add our first task to the previously created DAG : 
 
+```python
+# add this import 
+from airflow.operators.python import PythonOperator
+
+# add the function you want to use
+def print_a():
+  print('hi from task a')
+
+# replace None with your task in the DAG definition
+  task_a = PythonOperator(task_id='task_a', python_callable=print_a)
+```
+
+With the TaskFlow API, we would write this :
+
+```python
+def my_dag():
+    
+    @task
+    def print_a():
+        print('hi from task a')
+```
+
+Instead of importing the PythonOperator, you import task decorator.
+The TaskFlow API changes your way of writing DAGs. It becomes faster, cleaner and easier than with the traditional paradigm.
+
+The last step is to define the order in which the tasks will be executed, that's what we need the dependencies for.
+If you have 2 tasks, saying that task_b should be executed after task_a is as simple as writing this at the end of your DAG file :
+
+```python
+task_a >> task_b
+```
+
+Now let's say you have 5 tasks (a to e) and want to execute a first, then b to d at the same time, and then e :
+
+```python
+task_a >> [task_b, task_c, task_d] >> task_e
+```
+
+How about if we want to run b and c at the same time, and after that d and e at the same time ?
+Airflow doesn't allow a dependency between two lists.
+Instead, we can use a helper, in this case, a chain.
+
+```python
+from airflow.utils.helpers import chain
+
+chain(task_a, [task_b, task_c], [task_d, task_e]) 
+```
+
+You can use the bitshift operators to define dependencies with the traditional paradigm.
+It's no different with the TaskFlow API :
+
+```python
+def my_dag():
+
+    @task
+    def print_a():
+        print('hi from task a')
+    
+...
+
+    @task
+    def print_e():
+        print('hi from task e')
+
+
+    print_a() >> print_b() >> print_c() >> print_d() >> print_e()
+
+my_dag()
+```
+Notice that you must call your tasks as if they were usual python functions with the parentheses.
+
+You have successfully created your first Airflow data pipeline !
+
+Here is a complete DAG file for a pipeline to create a file using Bash and read it using Python :
+
+```python
+from airflow import DAG
+from datetime import datetime
+from airflow.operators.python import PythonOperator
+from airflow.operators.bash import BashOperator
+
+with DAG(dag_id='check_dag', schedule='@daily', 
+        start_date=datetime(2023, 1, 1), catchup=False,
+        description='DAG to check data', tags=['data_engineering']):
+    
+    create_file = BashOperator(
+        task_id='create_file',
+        bash_command='echo "Hi there!" >/tmp/dummy'
+    )
+
+    check_file_exists = BashOperator(
+        task_id='check_file_exists',
+        bash_command='test -f /tmp/dummy'
+    )
+
+    read_file = PythonOperator(
+        task_id='read_file',
+        python_callable=lambda: print(open('/tmp/dummy', 'rb').read())
+    )
+
+    create_file >> check_file_exists >> read_file
+```
+ 
 ### DAG scheduling
+
+Discover how your DAGs are scheduled in Airflow :
+- What is a DAGRun
+- How the start_date and schedule_interval work together
+- back filling and catching up DAGs
+
+#### DAG Run
+
+Let's say you have a data pipeline with three tasks, as soon as the scheduler starts scheduling your DAG, you will end up with a DAG Run, which is defined by two values : data_interval_start and data_iterval_end.
+a DAG Run goes through different states, first 'Queued', then 'Running' as soon as the first task starts, and finally 'Success' is the last task succeeds or 'Failure' otherwise.
+
+#### DAG Scheduling
+
+There 2 main parameteres for each DAG :
+- start_date : the date at which the DAG starts being scheduled
+(The real definition of start_date is "the timestamp from which the scheduler will attempt to backfill")
+
+- schedule_interval : defines how often the DAG runs (every 10 minutes, once a month...)
+
+You can configure your DAG for a basic schedule is by defining its schedule argument using either a cron expression or selecting one of the available cron "presets".
+
+- None          Don’t schedule, use for exclusively “externally triggered” DAGs
+- @once          Schedule once and only once
+- @hourly          Run once an hour at the end of the hour
+- @daily          Run once a day at midnight (24:00)
+- @weekly          Run once a week at midnight (24:00) on Sunday
+- @monthly          Run once a month at midnight (24:00) of the first day of the month
+- @quarterly        Run once a quarter at midnight (24:00) on the first day
+- @yearly          Run once a year at midnight (24:00) of January 1
+
+You can also use a timedelta object to schedule a DAGs :
+
+```python
+from datetime import timedelta
+
+# schedule your DAGs biweekly
+schedule = timedelta(weeks=2),
+```
 
 ### Connections 101
 
