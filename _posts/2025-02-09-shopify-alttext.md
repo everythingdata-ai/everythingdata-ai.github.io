@@ -96,6 +96,16 @@ Go back to Gadget to make sure everything went well :
 ![image](https://github.com/user-attachments/assets/dc904606-2fc4-45c5-9a49-39a615083a99)
 
 
+#### Coding the app
+
+Now that everything is ready, let's get started making our app.
+The idea is to add to the UI a boolean flag that says "does the merchant want to use the computer vision AI".
+
+In the ShopifyShop schema, let's create a new Boolean feild called userImage :
+
+![image](https://github.com/user-attachments/assets/c7a8f092-24bf-4b23-82bc-4e48c0bce447)
+
+
 
 
 
