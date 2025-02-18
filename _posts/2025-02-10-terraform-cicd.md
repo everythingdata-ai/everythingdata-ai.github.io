@@ -74,6 +74,8 @@ You can find your run on your HCP Terraform UI, in the Runs tab :
 
 ![image](https://github.com/user-attachments/assets/6bca87cf-d8d0-4e0d-98a8-902270950e40)
 
+In your workspace settings, set your Terraform Working Directory to the Terraform folder you created :
 
+![image](https://github.com/user-attachments/assets/eaee8a27-1ee0-40ee-ba79-e1a4eca75e27)
 
-
+Now everytime you push any changes to your Github project, Terraform will run automatically.
