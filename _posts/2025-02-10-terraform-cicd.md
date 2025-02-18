@@ -50,19 +50,7 @@ Click on Generate token, and copy your token on the prompt window.
 
 ![image](https://github.com/user-attachments/assets/80f19402-fe9f-431f-825a-e2d6b6c0db43)
 
-You can edit your main.tf file to configure HCP Terraform as the backend : 
-
-Replace this code :
-
-```yaml
-terraform {
-  backend "local" {
-    path = "terraform.tfstate"
-  }
-} 
-```
-
-With :
+In your project, create a ```terraform``` folder, and inside it your main.tf file to configure HCP Terraform as the backend : 
 
 ```yaml
 terraform { 
@@ -77,7 +65,7 @@ terraform {
 }
 ```
 
-And run ```terraform init``` if it's a new project or ```terraform init -migrate-state``` if it's an existing one :
+And run ```terraform init``` :
 
 ![image](https://github.com/user-attachments/assets/0be306ea-c2da-46f8-8dca-f17fce9e99c5)
 
