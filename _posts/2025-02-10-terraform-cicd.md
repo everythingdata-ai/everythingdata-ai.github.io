@@ -79,3 +79,39 @@ In your workspace settings, set your Terraform Working Directory to the Terrafor
 ![image](https://github.com/user-attachments/assets/eaee8a27-1ee0-40ee-ba79-e1a4eca75e27)
 
 Now everytime you push any changes to your Github project, Terraform will run automatically.
+
+### GCP Credentials
+
+In Terraform documentation for the GCP provider, the authentication is done by pointing to the location of the JSON key file, which is not a suitable approach for Terraform Cloud.
+
+We can set the GCP credentials by creating a variable named gcp-creds in a variables.tf file :
+
+```yaml
+variable "gcp-creds" {
+  default     = ""
+}
+```
+
+The main.tf file will look like this : 
+
+```yaml
+provider "google" {
+  credentials = var.gcp-creds
+  project     = var.project
+  region      = var.region
+}
+```
+
+Then we create a variable in the Terraform Cloud UI named gcp-creds and we populate it with the content of JSON key file as its value :
+
+![image](https://github.com/user-attachments/assets/5257f440-31b9-48dc-ad0e-e9339412af45)
+
+Please don't forget to set up the variable as sensitive.
+
+The runs will then go from this : 
+
+![image](https://github.com/user-attachments/assets/9b3103f7-d920-4fcd-9f70-5e8310fa8526)
+
+To this :
+
+![image](https://github.com/user-attachments/assets/89c54b94-1c7e-4807-a295-34560c01bd9a)
