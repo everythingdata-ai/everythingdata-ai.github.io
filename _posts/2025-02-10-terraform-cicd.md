@@ -70,4 +70,10 @@ And run ```terraform init``` :
 ![image](https://github.com/user-attachments/assets/0be306ea-c2da-46f8-8dca-f17fce9e99c5)
 
 And finally run ```terraform apply``` to start the first run for this workspace.
+You can find your run on your HCP Terraform UI, in the Runs tab :
+
+![image](https://github.com/user-attachments/assets/6bca87cf-d8d0-4e0d-98a8-902270950e40)
+
+
+
 
