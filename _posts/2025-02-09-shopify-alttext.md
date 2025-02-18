@@ -13,7 +13,7 @@ Having hundreds of products, it will be painful to do this manually, so today I 
 
 Having never used Shopify, everything was new to me. 
 First thing I needed was creating a Shopify account obviously, and asking my friend to give me Collaborator access.
-After searching the internet for a bit, I found out that the best way to automate alt-text genenration is through an app, and for that [Gadget](www.gadget.dev) is a great solution.
+After searching the internet for a bit, I found out that the best way to automate alt-text genenration is through an app, and for that [Gadget](http://www.gadget.dev) is a great solution.
 Gadget helps you build and launch Shopify apps fast, with built-in ecommerce integrations, a fully managed database, instant APIs and hosted React frontends.
 The free-tier of Gadget is enough to to produce one app so there will be no need for a credit card.
 
