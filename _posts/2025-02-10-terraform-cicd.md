@@ -115,3 +115,15 @@ The runs will then go from this :
 To this :
 
 ![image](https://github.com/user-attachments/assets/89c54b94-1c7e-4807-a295-34560c01bd9a)
+
+Notice that Terraform only executed the ```terraform plan```, the Apply is pending human confirmation : 
+
+![image](https://github.com/user-attachments/assets/58952ac2-1646-4647-bfb1-86fadeff1733)
+
+It is possible to automatically apply changes for successful runs.
+You can do that by going to Setting and checking "Auto-apply API, CLI, & VCS runs" in the Auto-apply tab.
+
+![image](https://github.com/user-attachments/assets/3af854cb-d984-4984-b90d-8d6c3ae41a2a)
+
+
+
