@@ -28,6 +28,7 @@ Paste your SSH key and click on Add SSH key.
 
 ![image](https://github.com/user-attachments/assets/bc11c4be-9826-43c3-90a9-f0aa0b510e07)
 
+You are now connected to your Github account, and can clone your newly created project using ```git clone git@github.com:your-username/your-project.git```
 
 ### HCP Terraform 
 
