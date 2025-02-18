@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Create a CI/CD pipeline using Terraform Cloud
-categories: [AI]
+categories: [Data Engineering, Terraform]
 ---
 
 In the previous posts, I have been using Terraform to manage my GCP infrastructure.
