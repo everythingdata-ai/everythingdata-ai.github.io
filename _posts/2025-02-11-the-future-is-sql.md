@@ -4,9 +4,11 @@ title: The future is SQL
 categories: [Data Engineering, SQL]
 ---
 
-Last week I attended a talk titled 'The Future is SQL'
+Last week I attended a talk titled 'The Future is SQL'.
+
 When I just started working as a Data Engineer, I remember feeling ashamed that the only programming language I used was SQL.
 But now, SQL can handle the whole data pipeline and is's all you need for a modern data stack !
+
 Here are some tools that made SQL what it is today :
 
 #### Cloud Data Warehouses 
