@@ -9,7 +9,7 @@ Last week I attended a talk titled 'The Future is SQL'.
 When I just started working as a Data Engineer, I remember feeling ashamed that the only programming language I used was SQL.
 But now, SQL can handle the whole data pipeline and is's all you need for a modern data stack !
 
-Here are some tools that made SQL what it is today :
+Here are some tools that brought back SQL from the brink of death and made it what it is today :
 
 ### Cloud Data Warehouses 
 
@@ -56,6 +56,8 @@ You can also push updates in real-time to downstream systems like Kafka or a dat
 ![image](https://github.com/user-attachments/assets/ea6adf15-304f-42b0-9f73-fdaf63252270)
 
 And last but not least, the topic of the "The future is SQL" lecture : [BigFunctions](https://unytics.io/bigfunctions/) is a tool that helps you supercharge BigQuery with powerful functions.
+From refreshing your Power BI to report to sending messages on Slack, BigFunctions brings over 150 functionalities directly to your BigQuery without installation.
+"BigQuery, BigFunctions and dbt is all you need"
 
 ### The SQL-data stack
 
@@ -75,4 +77,5 @@ While that's partially true, it hides the real truth : SQL is the most popular l
 
 As data continues to grow in importance, SQL's role will only expand. 
 The language's simplicity, combined with modern tools that enhance its capabilities, has created a perfect storm for SQL to become the primary language for data work. 
-From local analysis to production data pipelines, SQL has evolved from a simple query language to the backbone of the modern data stack.
+
+From local analysis to production data pipelines, SQL has evolved from a simple query language to the backbone of the modern data stack, and it doesn't seem to be slowing down.
