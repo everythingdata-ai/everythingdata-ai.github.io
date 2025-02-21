@@ -262,7 +262,7 @@ order by
     orders.order_date
 ```
 
-Notice that we used a macro in this query, called `discounted_amount`.
+Notice that we used a "macro" in this query, called `discounted_amount`.
 Macros are used to keep things D.R.Y (Don't repear yourself), we create them to re-use business logic across different models.
 
 If you have never used dbt macros, don't worry, I have a trick to help you become an expert, you just have to click [here](https://letmegooglethat.com/?q=dbt+macros).
