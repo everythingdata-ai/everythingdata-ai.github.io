@@ -9,6 +9,7 @@ In Data Engineering, what matters is bringing value, no matter which technology 
 However you still need some experience if you want to land a job.
 That's why it's time to expand my knowledge beyond GCP, and see what's it's like at other providers as well, like Azure or Snowflake.
 
+
 #### Overview
 
 This is an introduction to Snowflake project, so the datawarehouse will be at Snowflake.
