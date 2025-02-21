@@ -397,7 +397,35 @@ from datetime import timedelta
 schedule = timedelta(weeks=2),
 ```
 
+#### The Catchup parameter and Backfill
+
+On top of start_date and schedule_interval, you can set the parameter cathup to either true, Airflow will run any past scheduled intervals that have not been run, or false, and in this case only the latest non-triggered DAG Run will be executed. 
+
+Similar to the catchup mechanism, the backfill mechanism allows you to run historical DAG Runs.
+You can backfill using the Aiflow UI or the CLI using this command :
+
+```
+airflow backfill -s <START_DATE> -e <END_DATE> --rerun_failed_tasks -B <DAG_NAME>
+```
+
+or
+
+```
+airflow dags backfill --start-date START_DATE --end-date END_DATE dag_id
+```
+
+This will execute all DAG runs that were scheduled between START_DATE & END_DATE irrespective of the value of the catchup parameter in airflow.cfg.
+
+Note : -B means we want DAG Runs to happen in backwards. Latest date first then the older dates.
+
 ### Connections 101
+
+Airflow is meant to interact with various tools in your data stack.
+To interact with those tools and services, you need to create a connection.
+That's exactly what this module covers.
+
+
+
 
 ### XComs 101
 
