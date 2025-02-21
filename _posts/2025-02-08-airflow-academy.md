@@ -424,6 +424,12 @@ Airflow is meant to interact with various tools in your data stack.
 To interact with those tools and services, you need to create a connection.
 That's exactly what this module covers.
 
+#### What is a connection ?
+
+If you want to interact with an external system, like an API for loading / Snowflake for loading / dbt for transformation, you need to create a connection.
+A connection is nothing more than a set of parameters (login, password, hostname...) with a unique connection ID. 
+
+You can add a connection using the Airflow UI, by going to Admin > Connections.
 
 
 
