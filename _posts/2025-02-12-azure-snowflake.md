@@ -183,6 +183,7 @@ sources:
 ```
 
 And create the staging model `stg_tpch_orders.sql` :
+Staging tables are one-to-one with source tables.
 
 ```sql
 select
@@ -194,6 +195,239 @@ select
 from
     {{ source('tpch', 'orders') }}
 ```
+
+To make sure everything is working fine, run `dbt run` :
+
+![image](https://github.com/user-attachments/assets/193e79fd-79eb-47cf-a5e5-ad4c7b18628d)
+
+If you go back to Snowflake and refresh your Databases, your view should now be there :
+
+![image](https://github.com/user-attachments/assets/401cafcb-d08c-4966-972b-236a56967910)
+
+Now in a new file let's create a line_items view (`stg_tpch_line_items.sql`), with a surrogate key using dbt_utils.
+A natural key is a key that is derived from the data itself, such as a customer ID, a product code, or a date. A surrogate key is a key that is generated artificially, such as a sequential number, a GUID, or a hash.
+In this case our key will be a hash.
+
+```sql
+select
+    {{
+        dbt_utils.generate_surrogate_key([
+            'l_orderkey',
+            'l_linenumber'
+        ])
+    }} as order_item_key,
+	l_orderkey as order_key,
+	l_partkey as part_key,
+	l_linenumber as line_number,
+	l_quantity as quantity,
+	l_extendedprice as extended_price,
+	l_discount as discount_percentage,
+	l_tax as tax_rate
+from
+    {{ source('tpch', 'lineitem') }}
+```
+
+To run this new model only : `dbt run -s stg_tpcg_line_items`
+(`-s` is a shortcut for `--select
+
+#### Create transformed models (fact tables, data marts)
+
+Now that we have our sources, we need to transform them to create our fact table
+
+Quick reminder : Facts are the measurements that result from a business process event and are almost always numeric. A single fact table row has a one-to-one relationship to a measurement event as described by the fact table’s grain. Thus a fact table corresponds to a physical observable event, and not to the demands of a particular report. Within a fact table, only facts consistent with the declared grain are allowed. For example, in a retail sales transaction, the quantity of a product sold and its extended price are good facts, whereas the store manager’s salary is disallowed.
+
+If you're not familiar with Data Modeling techniques, you can checkout [The Data Warehouse Toolkit](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/)
+
+First let's create the dim tables : 
+
+In your models > marts folder, create a new file `int_order_items.sql` :
+
+```sql
+select
+    line_item.order_item_key,
+    line_item.part_key,
+    line_item.line_number,
+    line_item.extended_price,
+    orders.order_key,
+    orders.customer_key,
+    orders.order_date,
+    {{ discounted_amount('line_item.extended_price', 'line_item.discount_percentage') }} as item_discount_amount
+from
+    {{ ref('stg_tpch_orders') }} as orders
+join
+    {{ ref('stg_tpch_line_items') }} as line_item
+        on orders.order_key = line_item.order_key
+order by
+    orders.order_date
+```
+
+Notice that we used a macro in this query, called `discounted_amount`.
+Macros are used to keep things D.R.Y (Don't repear yourself), we create them to re-use business logic across different models.
+
+If you have never used dbt macros, don't worry, I have a trick to help you become an expert, you just have to click [here](https://letmegooglethat.com/?q=dbt+macros).
+
+dbt combines SQL with Jinja, a templating language, to turn your project into a programming environment for SQL, giving you the ability to do thing that aren't normally possible in SQL alone.
+
+Now that you're an expert, you can create a new file in your macros folder, and call it `pricing.sql`.
+Inside it you can put the example from the dbt macros documentation : 
+
+```sql
+{% macro cents_to_dollars(column_name, scale=2) %}
+    ({{ column_name }} / 100)::numeric(16, {{ scale }})
+{% endmacro %}
+```
+
+And adapt it to have a macro to calculate a discount based on the price and the discount percentage :
+
+```sql
+{% macro discounted_amount(extended_price, discount_percentage, scale=2) %}
+    (-1 * {{ extended_price }} * {{ discount_percentage }})::decimal(16, {{ scale }})
+{% endmacro %}
+```
+
+Create another intermediate model, in a new file called ìnt_order_items_summary.sql`:
+
+```sql
+select 
+    order_key,
+    sum(extended_price) as gross_item_sales_amount,
+    sum(item_discount_amount) as item_discount_amount
+from
+    {{ ref('int_order_items') }}
+group by
+    order_key
+```
+
+And finally our fact table `fct_orders.sql`:
+
+```sql
+select
+    orders.*,
+    order_item_summary.gross_item_sales_amount,
+    order_item_summary.item_discount_amount
+from
+    {{ref('stg_tpch_orders')}} as orders
+join
+    {{ref('int_order_items_summary')}} as order_item_summary
+        on orders.order_key = order_item_summary.order_key
+order by order_datef
+```
+Run `dbt run` and you're good to go : 
+
+![image](https://github.com/user-attachments/assets/97e1cf08-ec8a-49cf-a226-7d6649c5e006)
+
+#### Testing your data
+
+There are two types of tests in dbt :
+- generic tests : test generic properties (unique, not null...)
+- singular tests : a singular SQL query that return failing rows
+
+In the test folder, create a new `generic_tests.yml` file :
+
+```yaml
+models:
+  - name: fct_orders
+    columns:
+      - name: order_key
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              to: ref('stg_tpch_orders')
+              field: order_key
+              severity: warn
+      - name: status_code
+        tests:
+          - accepted_values:
+              values: ['P', 'O', 'F']
+```
+
+This file will make sure that the field order_key from fct_orders is unique, not null, and exists in the stg_tpch_orders table.
+It will also make sure that the field status_code only contains these values : 'P', 'O' or 'F'.
+
+If you run `dbt test` you will get the results of your test :
+
+![image](https://github.com/user-attachments/assets/e4f4dcb6-6d4f-430d-b9de-d0613cf27145)
+
+Now let's create some singular tests. Create a new file `fct_orders_discount.sql`
+This will check if the item_discount is always greater than 0, because you can't have a negative discount.
+
+```sql
+select
+    *
+from
+    {{ref('fct_orders')}}
+where
+    item_discount_amount > 0
+```
+
+To understand how singular tests work, you can edit the code above by putting `item_discount_amount > 0`
+In this case, the test will fail because the query has results and doesn't return null.
+
+![image](https://github.com/user-attachments/assets/fbca382a-89e4-438d-807e-c8e1d0f14847)
+
+Let's add another singular test, `fct_orders_date_valid.sql`, that makes sure the values are within acceptable range :
+
+```sql
+select
+    *
+from
+    {{ref('fct_orders')}}
+where
+    date(order_date) > CURRENT_DATE()
+    or date(order_date) < date('1990-01-01')
+```
+
+#### Deploy the models using Airflow
+
+We've built some interesting things so far, now let's automate everything using Airflow.
+
+I will be using the [Astronomor Cosmos](https://github.com/astronomer/astronomer-cosmos) library.
+It's easy to install :
+
+```bash
+brew install astro
+```
+
+In the root of your project, execute these commands to initialize an Airflow project : 
+
+```bash
+mkdir dbt-dag
+cd dbt-dag
+astro dev init
+```
+
+Update the astro Dockerfile by adding this :
+
+```
+RUN python -m venv dbt_venv && source dbt_venv/bin/activate && \
+    pip install --no-cache-dir dbt-snowflake && deactivate
+```
+
+Update the requirements.txt file :
+
+```
+astronomer-cosmos
+apache-airflow-providers-snowflake
+```
+
+Now you can start your container using `astro dev start`
+Once it's built, the Airflow UI will open up (if not go to [http://localhost:8080/](http://localhost:8080/)) and you can login using admin/admin.
+
+![image](https://github.com/user-attachments/assets/670d6886-76ed-45cc-9adc-d13f308e1764)
+
+
+
+
+And add snowflake_conn in UI : 
+
+```
+
+```
+
+
+
+
 
 #### Closing notes
 
