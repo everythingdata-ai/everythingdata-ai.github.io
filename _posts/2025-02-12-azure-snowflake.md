@@ -93,6 +93,53 @@ You then put your username and password, and finally the role/dw/db/aschema we j
 
 <img width="722" alt="image" src="https://github.com/user-attachments/assets/c6ffbf2b-9a56-4598-9108-aa4251573b74" />
 
+You project should now be ready. If you're new to dbt, here are the different folders that have been created and what they're for :
+- models : where we write ou SQL logic
+- macros : write reusable macros
+- dbt-packages : third party libraries
+- seeds : static files or files that only change every few months
+- snapshots : useful when creating incremental models
+- tests : singular and generic tests
+
+Now let's install a useful package called `dbt-utils`, by creating a packages.yml file :
+
+```yaml
+packages:
+  - package: dbt-labs/dbt_utils
+    version: 1.3.0
+```
+
+And then in your terminal run `dbt deps`
+
+You should have a `profiles.yml` file with the information you provided while initiating the project : 
+For safety, you can replace your password with a variable : 
+
+```bash
+data_pipeline:
+  outputs:
+    dev:
+      account: hcaawun-fc10922
+      database: dbt_db
+      password: "{{ env_var('DBT_PASSWORD') }}"
+      role: dbt_role
+      schema: dbt_schema
+      threads: 10
+      type: snowflake
+      user: mouradgh
+      warehouse: dbt_wh
+  target: dev
+
+```
+
+And in your terminal set-up a variable with your password : 
+
+```bash
+export DBT_PASSWORD='your-password'
+````
+
+
+#### Create source and staging tables 
+
 Once your dbt project ready, edit your dbt_project.yml file by replacing the example model with these 2 models : 
 
 ```yaml
@@ -108,16 +155,45 @@ models:
 ```
 
 In the models folder you can delete example and create 2 new folders : marts and staging.
+It's a good practice to separate your staging files (source files) from marts (models that will materialize in Snowflake)
 
-Now let's install a useful package called `dbt-utils`, by creating a packages.yml file :
+In the staging folder create a new file called `tpch_sources.yml` :
 
 ```yaml
-packages:
-  - package: dbt-labs/dbt_utils
-    version: 1.3.0
+version: 1
+
+sources:
+  - name: tpch
+    database: snowflake_sample_data
+    schema: tpch_sf1
+    tables:
+      - name: orders
+        columns:
+          - name: o_orderkey
+            tests:
+              - unique
+              - not_null
+      - name: lineitem
+        columns:
+          - name: l_orderkey
+            tests:
+              - relationships:
+                  to: source('tpch', 'orders')
+                  field: o_orderkey
 ```
 
-And then in your terminal run `dbt deps`
+And create the staging model `stg_tpch_orders.sql` :
+
+```sql
+select
+    o_orderkey as order_key,
+    o_custkey as customer_key,
+    o_orderstatus as status_code,
+    o_totalprice as total_price,
+    o_orderdate as order_date
+from
+    {{ source('tpch', 'orders') }}
+```
 
 #### Closing notes
 
