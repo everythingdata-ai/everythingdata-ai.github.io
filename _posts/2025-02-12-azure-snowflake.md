@@ -478,7 +478,7 @@ Now if you go to your DAGs tab in the Airflow UI, you should find you newly crea
 
 ![image](https://github.com/user-attachments/assets/819b9688-2854-4208-b55a-fd4a86a37b04)
 
-#### Going further
+#### Going beyond
 
 Snowflake is rich with features, here some of the most useful ones :
 
@@ -501,11 +501,23 @@ You can also create dashboards on the Projects tab :
 
 ![image](https://github.com/user-attachments/assets/4b03d571-087b-436e-890c-6c5c5c3af208)
 
-- 
+- AI & ML Studio
+
+Snowflake offers many AI and ML tools to easily get value out of your data.
+
+![image](https://github.com/user-attachments/assets/d26c26cb-67df-45b5-bc2c-10cdd3ab593b)
+
+You can for example predict your sales with just a few steps using the Forecasting option.
+We can select the FCT_ORDERS table is training data, TOTAL_PRICE as a target column, and ORDER_DATE as a timestamp column.
+We can also use CUSTOMER_KEY as a series identifier.
+
+Snowflake will then generate everything for you and all you have left to do is execute the code !
+
+![image](https://github.com/user-attachments/assets/6b405cd6-a00f-47b1-96de-67b2a6726824)
 
 #### Closing notes
 
-In this tutorial we learned :
+I hope you enjoyed this tutorial as much as did, in which we learned :
 - how to set-up a Snowflake environment (users, roles, schemas, databases, warehouses)
 - how to connect dbt-core with Snowflake
 - staging and source models
