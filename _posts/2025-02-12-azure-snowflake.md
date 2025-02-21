@@ -515,6 +515,10 @@ Snowflake will then generate everything for you and all you have left to do is e
 
 ![image](https://github.com/user-attachments/assets/6b405cd6-a00f-47b1-96de-67b2a6726824)
 
+The `MAX(ORDER_DATE)` of our data being 1998-08-02, the model generates predictions for the following 14 days : 
+
+![image](https://github.com/user-attachments/assets/38a5b910-6d84-4eb4-ac21-265a0b6d4170)
+
 #### Closing notes
 
 I hope you enjoyed this tutorial as much as did, in which we learned :
