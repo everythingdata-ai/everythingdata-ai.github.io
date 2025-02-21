@@ -93,6 +93,32 @@ You then put your username and password, and finally the role/dw/db/aschema we j
 
 <img width="722" alt="image" src="https://github.com/user-attachments/assets/c6ffbf2b-9a56-4598-9108-aa4251573b74" />
 
+Once your dbt project ready, edit your dbt_project.yml file by replacing the example model with these 2 models : 
+
+```yaml
+models:
+  data_pipeline:
+    # Config indicated by + and applies to all files under models/example/
+    staging:
+      +materialized: view
+      snowflake_warehouse: dbt_wh
+    marts:
+      +materialized: table
+      snowflake_warehouse: dbt_wh
+```
+
+In the models folder you can delete example and create 2 new folders : marts and staging.
+
+Now let's install a useful package called `dbt-utils`, by creating a packages.yml file :
+
+```yaml
+packages:
+  - package: dbt-labs/dbt_utils
+    version: 1.3.0
+```
+
+And then in your terminal run `dbt deps`
+
 #### Closing notes
 
 To avoid encurring costs, you can drop everything you created in this tutorial using these commands :
