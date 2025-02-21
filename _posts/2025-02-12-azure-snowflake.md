@@ -262,7 +262,7 @@ order by
     orders.order_date
 ```
 
-Notice that we used a "macro" in this query, called `discounted_amount`.
+Notice that we used a macro in this query, called `discounted_amount`.
 Macros are used to keep things D.R.Y (Don't repear yourself), we create them to re-use business logic across different models.
 
 If you have never used dbt macros, don't worry, I have a trick to help you become an expert, you just have to click [here](https://letmegooglethat.com/?q=dbt+macros).
@@ -272,11 +272,13 @@ dbt combines SQL with Jinja, a templating language, to turn your project into a 
 Now that you're an expert, you can create a new file in your macros folder, and call it `pricing.sql`.
 Inside it you can put the example from the dbt macros documentation : 
 
+{% raw %}
 ```sql
 {% macro cents_to_dollars(column_name, scale=2) %}
     ({{ column_name }} / 100)::numeric(16, {{ scale }})
 {% endmacro %}
 ```
+
 
 And adapt it to have a macro to calculate a discount based on the price and the discount percentage :
 
@@ -285,6 +287,7 @@ And adapt it to have a macro to calculate a discount based on the price and the 
     (-1 * {{ extended_price }} * {{ discount_percentage }})::decimal(16, {{ scale }})
 {% endmacro %}
 ```
+{% endraw %}
 
 Create another intermediate model, in a new file called ìnt_order_items_summary.sql`:
 
