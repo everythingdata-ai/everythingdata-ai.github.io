@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Snowflake ELT project with dbt/Airflow
-categories: [Data Engineering, Snowflake]
+categories: [Data Engineering, Snowflake, dbt, Airflow]
 ---
 
 Today I will be exploring a new data stack that I have never used before.
