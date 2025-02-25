@@ -59,6 +59,12 @@ And last but not least, the topic of the "The future is SQL" lecture : [BigFunct
 From refreshing your Power BI to report to sending messages on Slack, BigFunctions brings over 150 functionalities directly to your BigQuery without installation.
 "BigQuery, BigFunctions and dbt is all you need"
 
+### SQLMesh
+
+![image](https://github.com/user-attachments/assets/6c77c59b-7ef0-41b5-a6c9-bb75852757bf)
+
+SQLMesh is an open-source data transformation framework that brings software engineering best practices to SQL workflows, differentiating itself from tools like dbt through its automatic dependency inference, isolated development environments, and native versioning system. Unlike dbt's manual configuration approach, SQLMesh automatically tracks changes between models by parsing SQL queries, determines what needs to be recomputed when changes occur, and handles incremental models without explicit configuration. Its time travel capabilities enable point-in-time testing against historical data, while its environment-based workflow allows developers to test changes in isolation before promotion to production. Though newer and with a smaller community compared to dbt, SQLMesh offers a more integrated approach to the end-to-end development lifecycle, potentially reducing long-term maintenance overhead despite a steeper initial learning curve.
+
 ### The SQL-data stack
 
 All these tools are helping the evolution from the modern-data-stack to the SQL-data-stack 
