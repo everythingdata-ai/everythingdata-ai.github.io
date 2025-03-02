@@ -54,5 +54,43 @@ Now that Claude understands the scope of the project, let's ask it to explain it
 This project is rather simple, if the results are as good for more complex projects then I'm gonna need to find a new career.
 The cost of explaining the project was 0.07$, not too bad !
 
+#### Going further
+
+Now that we saw hoes Claud Caude does for a simple project, let's push it to the limit.
+I will clone the [dbt-core](https://github.com/dbt-labs/dbt-core) project and see if Claude can uderstand it.
+
+Despite the project being much larger, the `/init` command cost 0.22$ again.
+However, explaining the project took almost a minute, and cost a staggering 0.21$ compared to 0.07$ for the previous project.
+His exmplanation was on point :
+
+<img width="960" alt="image" src="https://github.com/user-attachments/assets/f6c36ebf-b490-44d2-bc1d-441c85798e76" />
+
+Now let's see if Claude can fix bugs. Going to the issues tab in the project's Github, the first bug that I found was this one : 
+
+"It seems that starting the selection string with a * is mandatory in order for further wildcards to work. We should be able to use wildcards without having to start the selector string with "*""
+
+For 0.18$, Claude finds the exact location related to the bug : 
+
+```bash
+ The specific issue is in the is_selected_node function (lines 69-108) which:
+  1. First checks for exact matches (line 79)
+  2. Then checks each component before finding a wildcard (lines 88-95)
+  3. Only switches to wildcard matching mode when it encounters a wildcard (lines 97-105)
+
+  This is why patterns that don't start with wildcards but contain them later don't work as expected - the selector checks for exact
+  matches in the beginning parts and fails before it reaches the wildcard.
+
+  The workaround is to always start your wildcard patterns with * when you need to use wildcards in selection patterns.
+```
+
+Now let's ask it to fix the bug :
+
+<img width="974" alt="image" src="https://github.com/user-attachments/assets/be8b7da2-4243-4534-88d1-9b74d845784b" />
+
+This is mind blowing, for 3 cents only Claude could fix a bug in an open source project ! 
+I can imagine that in the near-future, you can include a Claude Code step in your CI/CD workflow, to automatically fix bugs.
+
+<img width="952" alt="image" src="https://github.com/user-attachments/assets/76e1300c-5780-47f6-99bf-1c749ed3e425" />
+
 
 
