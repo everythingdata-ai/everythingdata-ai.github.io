@@ -11,6 +11,10 @@ Is it worth the hype ? Let's find out !
 
 Today Anthropic announced their newest model, Claude Sonnet 3.7, and along with, Claude Code.
 Anthropic has identified that Coding is their biggest strength, and have now released an agentic coding system that you can use right now.
+
+![image](https://github.com/user-attachments/assets/3abd60b8-2f3d-4168-bf86-2052ebb4deaf)
+
+
 This is huge, not only is Sonnet 3.7 significantly better at coding, but Claude Code addresses most of the major pain points related to using LLMs while coding (understanding codebase context, quickly making changes, focusing on key snippets rather than writing entire files.. etc.).
 Basically, the entire coding process just got a whole lot easier, a whole lot faster, and a lot more accessible.
 
@@ -109,10 +113,21 @@ I now officially have a contribution to the dbt project :
 
 ![image](https://github.com/user-attachments/assets/6bb3bb0c-233d-434a-bf37-193e1c597a77)
 
+And if you're like me, always Googlling which Git command to use and getting stuck with every little issue, those are things from the past, because claude will take care of that from now on using only natural language, for the modest sum of 10 cents : 
+
+<img width="722" alt="image" src="https://github.com/user-attachments/assets/9fb6ffcd-f8c2-4100-8d50-02e1c4367baa" />
+
 And here is my total cost for these 2 use cases :
 
-![image](https://github.com/user-attachments/assets/e8f5a60a-33fd-4580-b797-f4b1f05a9bb0)
+![image](https://github.com/user-attachments/assets/2a1f68ac-487a-454c-98b5-8f89ca207325)
+
+While using Claude through an API, you can budget for thinking by instructing Claude to not exceed token limits, which may affect speed and quality :
+
+```bash
+Summarize this document while reasoning for no more than 10,000 tokens. Keep key details intact but prioritize conciseness.
+```
 
 #### Conclusion
 
-After ChatGPT and Midjourney, and think this is the most hyped up I've felt about an AI tool !
+After ChatGPT and Midjourney, I think this is the most hyped up I've felt about an AI tool !
+Claude Code seems to be the next step in the AI Coding scene, and I can't wait to put it to good use !
