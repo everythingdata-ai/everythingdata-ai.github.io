@@ -4,12 +4,25 @@ title: Taking Claude Code for a test drive
 categories: [AI]
 ---
 
+Today's post will be about Anthropic's Claude Clode, the newest AI programming agent.
+Is it worth the hype ? Let's find out !
+
+#### Introduction 
+
 Today Anthropic announced their newest model, Claude Sonnet 3.7, and along with, Claude Code.
 Anthropic has identified that Coding is their biggest strength, and have now released an agentic coding system that you can use right now.
 This is huge, not only is Sonnet 3.7 significantly better at coding, but Claude Code addresses most of the major pain points related to using LLMs while coding (understanding codebase context, quickly making changes, focusing on key snippets rather than writing entire files.. etc.).
 Basically, the entire coding process just got a whole lot easier, a whole lot faster, and a lot more accessible.
 
-Let's take it for a test run.
+Here are a few key capabilities of Claude Code:
+
+- Editing and refactoring: Modify, optimize, and enhance your codebase with AI-powered suggestions.
+- Bug fixing: Identify and resolve errors, missing dependencies, and performance bottlenecks.
+- Code understanding: Ask questions about your code’s architecture, logic, and dependencies.
+- Automated testing & linting: Execute and fix failing tests, run linting commands, and improve code quality.
+- Git integration: Search through git history, resolve merge conflicts, create commits, and generate pull requests effortlessly.
+
+Let's take it for a test run !
 
 #### Setting up
 
@@ -87,10 +100,19 @@ Now let's ask it to fix the bug :
 
 <img width="974" alt="image" src="https://github.com/user-attachments/assets/be8b7da2-4243-4534-88d1-9b74d845784b" />
 
-This is mind blowing, for 3 cents only Claude could fix a bug in an open source project ! 
+This is mind blowing, for 17 cents only Claude could fix a bug in an open source project ! 
 I can imagine that in the near-future, you can include a Claude Code step in your CI/CD workflow, to automatically fix bugs.
 
 <img width="952" alt="image" src="https://github.com/user-attachments/assets/76e1300c-5780-47f6-99bf-1c749ed3e425" />
 
+I now officially have a contribution to the dbt project : 
 
+![image](https://github.com/user-attachments/assets/6bb3bb0c-233d-434a-bf37-193e1c597a77)
 
+And here is my total cost for these 2 use cases :
+
+![image](https://github.com/user-attachments/assets/e8f5a60a-33fd-4580-b797-f4b1f05a9bb0)
+
+#### Conclusion
+
+After ChatGPT and Midjourney, and think this is the most hyped up I've felt about an AI tool !
