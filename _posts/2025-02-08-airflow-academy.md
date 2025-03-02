@@ -431,9 +431,86 @@ A connection is nothing more than a set of parameters (login, password, hostname
 
 You can add a connection using the Airflow UI, by going to Admin > Connections.
 
+If you're using Astro, you can add a connector in your .env file, for example to connect to Snowflake you can add this line :
 
+```
+AIRFLOW_CONN_SNOWFLAKE='snowflake://username:password@host/db_schema?account=account_name&@database=database_name@warehouse=warehouse_name&role=role_name"
+```
+
+When you create a connection as an environment variable, you're not going to see it in the UI.
+If you want to export it, you can use this command : 
+
+```
+astro deployment variable create --deployment-id your_id --load --env .env
+```
+
+#### Pain points
+
+Airflow connections come with pain points, for example duplicate connection setup.
+If you have a development environment, you can't share those connections to your production environment, you have to duplicate them.
+
+Astro has a Connection Management component that helps with that, so you only have to define your connections in one environment.
+
+#### Summary
+
+- An Airflow Connection stores credentials to interact with external systems (S3, Snowflake, etc).
+- A Connection is a set of parameters such as login, password, host and some specific fields that depend on the Connection type.
+- A Connection type corresponds to the external system you want to interact with: Snowflake, Postgres, MySQL etc.
+- If the Connection type isn't available, you must install the corresponding Airflow provider.
+- A Connection must have a unique identifier.
+- To use a Connection in an Operator, refer to it using the Connection identifier.
 
 ### XComs 101
+
+If you are wondering how to share data between your tasks . Well you can do it using XComs.
+And luckily it is not complicated at all.
+
+First, what is an XCOM ?
+Let's say you have two tasks : 
+- Task A : scans a folder to get a list of files
+- Task B : downloads the firles that are in that list
+
+To get the list of files from Task A to Task B, Task A pushes an XCom that contains the value you want to share (the list of files) to Airflow's metadata database, and next Task B pulls that XCom.
+
+An XCom has many properties :
+- key: unique identifier
+- value : JSON serializable
+- task_id : from which the XCom was created
+- dag_id : from which the XCom was created
+- timestamp : when the XCOM was created
+- logical_date/execution_date : DAG Run data_interval_start
+
+Here is an example :
+
+![image](https://github.com/user-attachments/assets/1152f6d4-dc29-4f55-8b25-1e0dd36d2969)
+
+If you go to Admin > XComs in your Airflow UI, you can see the XCom that was created :
+
+![image](https://github.com/user-attachments/assets/a729b3be-996c-4c75-ba4d-7860c7720aba)
+
+#### XCom methods
+
+When you return a value from the Python operator, that values becomes automatically an XCom with the key `return_value`.
+If you want to specify a key, you can use the XCom operators `xcom_push` and `xcom_pull`.
+
+```python
+with DAG(...
+
+  @task
+  def taskA(ti=None)
+    ti.xcom_push(key='mobile_phone', value='iphone')
+
+  @task
+  def taskB(ti=None)
+    ti.xcom_push(key='mobile_phone', value='galaxy')
+
+  @task
+  def taskC(ti=None)
+    phones = ti.xcom_pull(task_ids=['taskA', 'taskB'], key='mobile_phone')
+    print(phones)
+
+taskA() >> taskB() >> taskC()
+```
 
 ### Variables 101
 
