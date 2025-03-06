@@ -22,3 +22,8 @@ A swarm is a type of multi-agent architecture where agents dynamically hand off 
 The system remembers which agent was last active, ensuring that on subsequent interactions, the conversation resumes with that agent.
 
 ![image](https://github.com/user-attachments/assets/d6e1f08f-d9bb-4c30-96dd-b7e9f6905372)
+
+When building an agentic AI application, one of the first choices we need to take is the architecture. There are several architectures and each of them has their pros and cons
+
+![image](https://github.com/user-attachments/assets/b8d073cf-4222-409e-a292-3b9cd707b332)
+
