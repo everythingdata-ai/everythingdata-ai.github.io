@@ -53,6 +53,7 @@ Status page to check application health
 Environment variable verification
 Comprehensive documentation
 ```
+
 Now we can run our app using ```npm run dev```
 
 And the result is, bluffing !
@@ -71,4 +72,29 @@ Obviously this was too good to be true, and we run into our first error :
 Instead of going the traditional route, searching Google and going through endless Stackoverflow issues, let's just get Cursor to fix it :
 
 <img width="584" alt="image" src="https://github.com/user-attachments/assets/9bf551e9-e1be-417f-8ec2-2a95034891fe" />
+
+After a few minutes, Cursor solved the issue of langchain, and now we have our second error :
+
+![image](https://github.com/user-attachments/assets/f1c0e3f8-7052-455f-8035-708b2291fe4c)
+
+You know the drill, back to the Composer chat : 
+
+<img width="584" alt="image" src="https://github.com/user-attachments/assets/c43eb998-2eb4-44d5-8418-53c82c934ae8" />
+
+What would have taken me at least an hour to solve, now only takes a couple of minutes :
+
+<img width="584" alt="image" src="https://github.com/user-attachments/assets/ab503329-3884-4854-8584-ab1775c9304a" />
+
+If goes so far as modifying a freaking module : 
+
+<img width="582" alt="image" src="https://github.com/user-attachments/assets/f60521a0-e523-4780-b597-74a1ae8ed20d" />
+
+But still another error, hopefully the last one :
+
+![image](https://github.com/user-attachments/assets/15600496-3987-45a8-9de1-6e16982ff4f8)
+
+
+
+
+
 
