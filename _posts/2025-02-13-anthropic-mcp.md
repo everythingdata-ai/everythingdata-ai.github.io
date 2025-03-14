@@ -17,8 +17,15 @@ MCP significantly enhances AI agents’ capabilities by enabling direct, bidirec
 
 At its core, MCP follows a client-server architecture where a host application can connect to multiple servers.
 Key components include:
-- Host
-- Client
-- Server
+- Host : An AI app (Claude desktop, Cursor) that provides an environment for AI interactions, accesses tools and data, and runs the MCP Client.
+- Client : Operates within the host to enable communication with MCP servers.
+- Server : A server exposes specific capabilities and provides access to data.
 
 ![MCP architecture](/images/posts/2025/03/mcp.gif)
+
+MCP has 3 key capabilities:
+
+- Tools: Enable LLMs to perform actions through your server
+- Resources: Expose data and content from your servers to LLMs
+- Prompts: Create reusable prompt templates and workflows
+
