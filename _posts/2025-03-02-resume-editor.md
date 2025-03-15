@@ -5,7 +5,7 @@ categories: [AI]
 ---
 
 Yesterday I received a message from a friend asking if I knew an AI that can adapt his resume to a job offer.
-While I'm sture such a tool exists, I want to create one myself, harnessing the power of "vibe coding".
+While I'm sure such a tool exists, I want to create one myself, harnessing the power of "vibe coding".
 Let's see how it goes.
 
 ### First steps
