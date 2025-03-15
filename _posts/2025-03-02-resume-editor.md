@@ -93,6 +93,28 @@ But still another error, hopefully the last one :
 
 ![image](https://github.com/user-attachments/assets/15600496-3987-45a8-9de1-6e16982ff4f8)
 
+And finally, after 5-10 minutes of back and forth, we have our first resume, which, has nothing to do with the original resume or the job posting.
+So there's still some work to do : 
+
+![image](https://github.com/user-attachments/assets/160cc1fc-913e-464e-80e3-3a41b1e43aa4)
+
+### Next steps
+
+After about an hour from opening Cursor, I got a fully functional web application 
+Mind you the tailoring is far from perfect, I will need to manually edit the LLM prompt.
+Also the formatting of the CV is terrible, I had to work on that aspect as well.
+
+But overall, I'm very satisfied with the result, I got a working MVP in an hour, without AI it would have taken me at least a week of work, and for someone without coding experience, it would have been almost impossible.
+
+In the next few days I will keep working on the project, asking Claude to add other functionalities like :
+- a login / account system
+- a solid security, maybe add Cloudflare
+- different resume formatting options
+
+### MCP
+
+In a previous article I talked about MCP, Anthropic's
+Let's give the server a try
 
 
 
