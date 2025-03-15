@@ -111,11 +111,6 @@ In the next few days I will keep working on the project, asking Claude to add ot
 - a solid security, maybe add Cloudflare
 - different resume formatting options
 
-### MCP
-
-In a previous article I talked about MCP, Anthropic's
-Let's give the server a try
-
 
 
 
