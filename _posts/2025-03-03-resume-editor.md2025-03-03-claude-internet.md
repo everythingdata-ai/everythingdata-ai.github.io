@@ -5,11 +5,15 @@ categories: [AI]
 ---
 
 Today's post will be a short one.
+
 If you're like me, your new best friend is Anthropic's Claude, then you might have seen this text over and over again : "my knowledge has a cutoff date of October 2024"
+
 And if you have been reading my blog, you should know that Anthropic recently introduced MCP : a protocol to help Claude receive information from spcialized servers.
+
 That means that it's now so easy to eonnect Claude to the internet, so let's do that.
 
 First, you need the desktop version of Claude that you can download [here]().
+
 Second, I will be using my favorite Browser Brave for the internet access, through their Search API. 
 You need to create an account [here](https://brave.com/search/api/)
 By subscribing to the free plan, you can get up to 2,000 queries/month, you will however need to provide your credit card information.
