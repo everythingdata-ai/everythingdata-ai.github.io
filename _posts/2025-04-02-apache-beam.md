@@ -76,8 +76,24 @@ Here is a example :
 ```python
 import apache_beam as beam
 
+# Output PCollection
+class Output(beam.PTransform):
+    class _OutputFn(beam.DoFn):
+
+        def process(self, element):
+            print(element)
+
+    def expand(self, input):
+        input | beam.ParDo(self._OutputFn())
+
 with beam.Pipeline() as p:
   pass  # build your pipeline here
+```
+
+You can use the pipeline options to configure different aspects of your pipeline, such as the pipeline runner that will execute your pipeline :
+
+```python
+from apache_beam.options.pipeline_options import PipelineOptions
 
 beam_options = PipelineOptions(
     runner='DataflowRunner',
@@ -89,13 +105,36 @@ beam_options = PipelineOptions(
 pipeline = beam.Pipeline(options=beam_options)
 ```
 
+#### Collections
 
+There are several options to create a PCollection : 
+- from an in-memory collection class in the driver program
+- reading data from a variety of external sources like local or cloud-based files, databases or other sources using I/O adapters
 
+To create a PCollection from in-memory data, you can use the Create function :
 
+```python
+# First create pipeline
+with beam.Pipeline() as p:
+  # Create a numerical PCollection
+  (p | beam.Create(range(1, 11)))
 
+  # Now create the PCollection using list of strings
+  (p | beam.Create(['To', 'be', 'or', 'not', 'to', 'be', 'that', 'is', 'the', 'question']))
+```
 
+To create a PCollection from a text file, you can use one of the Beam-provided I/O adapters to read from an external source.
+The adapters vary in their exact usage, but all of them read from some external data source and return a PCollection.
 
+```python
+# First create pipline
+with beam.Pipeline() as p:
 
+    # Now create the PCollection by reading text files. Separate elements will be added for each line in the input file
+    (p | beam.io.ReadFromText('gs://some/inputData.txt'))
+```
+
+### Common Transformers
 
 
 
